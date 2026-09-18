@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="theme-color" content="#0b1020">
+  <title>WebCode Studio</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header class="topbar">
+    <button id="menuBtn" class="icon-btn" aria-label="Open files">☰</button>
+    <div class="brand"><span class="logo">&lt;/&gt;</span><span>WebCode Studio</span></div>
+    <div class="top-actions">
+      <span id="userBadge" class="user-badge">Guest</span>
+      <button id="authBtn" class="btn ghost">Sign in</button>
+      <button id="saveBtn" class="btn primary">Save</button>
+    </div>
+  </header>
+
+  <div class="app-shell">
+    <aside id="sidebar" class="sidebar">
+      <div class="side-head">
+        <strong>Files</strong>
+        <button id="newFileBtn" class="icon-btn" title="New file">＋</button>
+      </div>
+      <div id="fileList" class="file-list"></div>
+      <div class="side-foot">
+        <button id="newProjectBtn" class="btn full">＋ New project</button>
+      </div>
+    </aside>
+
+    <main class="workspace">
+      <div class="tabs" id="tabs"></div>
+      <section class="editor-pane">
+        <div class="editor-head">
+          <span id="currentFile">index.html</span>
+          <span id="saveState">Saved locally</span>
+        </div>
+        <textarea id="editor" spellcheck="false" autocapitalize="off" autocomplete="off" autocorrect="off"></textarea>
+      </section>
+
+      <div class="splitter" aria-hidden="true"></div>
+
+      <section class="preview-pane">
+        <div class="preview-head">
+          <strong>Preview</strong>
+          <div>
+            <button id="runBtn" class="btn small">▶ Run</button>
+            <button id="refreshBtn" class="btn small ghost">↻</button>
+          </div>
+        </div>
+        <iframe id="preview" title="Website preview" sandbox="allow-scripts allow-forms"></iframe>
+      </section>
+    </main>
+  </div>
+
+  <div id="toast" class="toast"></div>
+
+  <dialog id="authDialog">
+    <div class="dialog-head">
+      <strong id="authTitle">Sign in</strong>
+      <button class="icon-btn" onclick="authDialog.close()">×</button>
+    </div>
+    <form id="authForm">
+      <label>Email<input id="email" type="email" required placeholder="you@example.com"></label>
+      <label>Password<input id="password" type="password" minlength="6" required placeholder="Minimum 6 characters"></label>
+      <button class="btn primary full" type="submit" id="authSubmit">Sign in</button>
+    </form>
+    <button id="switchAuth" class="link-btn">Create an account instead</button>
+    <p class="hint">V1 uses browser-local accounts for the prototype. Your data stays on this device.</p>
+  </dialog>
+
+  <dialog id="promptDialog">
+    <div class="dialog-head">
+      <strong id="promptTitle">New file</strong>
+      <button class="icon-btn" onclick="promptDialog.close()">×</button>
+    </div>
+    <form id="promptForm">
+      <input id="promptInput" required>
+      <button class="btn primary full" type="submit">Create</button>
+    </form>
+  </dialog>
+
+  <script src="app.js"></script>
+</body>
+</html>
