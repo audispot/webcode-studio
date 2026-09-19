@@ -1,87 +1,1341 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-  <meta name="theme-color" content="#0b1020">
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1, viewport-fit=cover"
+  >
+
+  <meta
+    name="theme-color"
+    content="#0b0b18"
+  >
+
+  <meta
+    name="description"
+    content="WebCode Studio - Build, edit, preview and publish websites from anywhere."
+  >
+
   <title>WebCode Studio</title>
+
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            studio: {
+              50: "#f5f3ff",
+              100: "#ede9fe",
+              200: "#ddd6fe",
+              300: "#c4b5fd",
+              400: "#a78bfa",
+              500: "#8b5cf6",
+              600: "#7c3aed",
+              700: "#6d28d9",
+              800: "#5b21b6",
+              900: "#4c1d95"
+            }
+          }
+        }
+      }
+    };
+  </script>
+
+  <!-- App CSS -->
   <link rel="stylesheet" href="styles.css">
 </head>
-<body>
-  <header class="topbar">
-    <button id="menuBtn" class="icon-btn" aria-label="Open files">☰</button>
-    <div class="brand"><span class="logo">&lt;/&gt;</span><span>WebCode Studio</span></div>
-    <div class="top-actions">
-      <span id="userBadge" class="user-badge">Guest</span>
-      <button id="authBtn" class="btn ghost">Sign in</button>
-      <button id="saveBtn" class="btn primary">Save</button>
-    </div>
-  </header>
 
-  <div class="app-shell">
-    <aside id="sidebar" class="sidebar">
-      <div class="side-head">
-        <strong>Files</strong>
-        <button id="newFileBtn" class="icon-btn" title="New file">＋</button>
-      </div>
-      <div id="fileList" class="file-list"></div>
-      <div class="side-foot">
-        <button id="newProjectBtn" class="btn full">＋ New project</button>
-      </div>
-    </aside>
+<body class="bg-[#080812] text-white antialiased">
 
-    <main class="workspace">
-      <div class="tabs" id="tabs"></div>
-      <section class="editor-pane">
-        <div class="editor-head">
-          <span id="currentFile">index.html</span>
-          <span id="saveState">Saved locally</span>
-        </div>
-        <textarea id="editor" spellcheck="false" autocapitalize="off" autocomplete="off" autocorrect="off"></textarea>
-      </section>
+  <!-- ========================================================= -->
+  <!-- APP ROOT -->
+  <!-- ========================================================= -->
 
-      <div class="splitter" aria-hidden="true"></div>
+  <div
+    id="app"
+    class="h-[100dvh] w-full overflow-hidden bg-[#080812]"
+  >
 
-      <section class="preview-pane">
-        <div class="preview-head">
-          <strong>Preview</strong>
-          <div>
-            <button id="runBtn" class="btn small">▶ Run</button>
-            <button id="refreshBtn" class="btn small ghost">↻</button>
+    <!-- ======================================================= -->
+    <!-- TOP BAR -->
+    <!-- ======================================================= -->
+
+    <header
+      id="topbar"
+      class="h-14 border-b border-white/10 bg-[#0d0d1d]/95 backdrop-blur-xl flex items-center justify-between px-3 sm:px-4 relative z-40"
+    >
+
+      <!-- LEFT -->
+      <div class="flex items-center gap-2 min-w-0">
+
+        <!-- Mobile menu -->
+        <button
+          id="mobileMenuBtn"
+          type="button"
+          class="icon-btn md:hidden"
+          aria-label="Open menu"
+        >
+          <svg
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="1.8"
+            class="w-5 h-5"
+          >
+            <path d="M4 6h16M4 12h16M4 18h16"/>
+          </svg>
+        </button>
+
+        <!-- Logo -->
+        <div class="flex items-center gap-2 min-w-0">
+
+          <div
+            class="w-8 h-8 rounded-xl bg-gradient-to-br from-violet-500 to-blue-500 flex items-center justify-center shadow-lg shadow-violet-500/20 shrink-0"
+          >
+            <svg
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.8"
+              class="w-4.5 h-4.5"
+            >
+              <path d="m8 9-4 3 4 3"/>
+              <path d="m16 9 4 3-4 3"/>
+              <path d="m14 5-4 14"/>
+            </svg>
           </div>
+
+          <div class="hidden sm:block min-w-0">
+            <div class="font-semibold text-sm leading-none truncate">
+              WebCode Studio
+            </div>
+
+            <div class="text-[10px] text-gray-500 mt-1 truncate">
+              Website Builder
+            </div>
+          </div>
+
         </div>
-        <iframe id="preview" title="Website preview" sandbox="allow-scripts allow-forms"></iframe>
+
+        <!-- Project name -->
+        <div class="hidden lg:flex items-center ml-5 gap-2 text-sm text-gray-400">
+          <span class="text-gray-600">/</span>
+
+          <span
+            id="topProjectName"
+            class="text-gray-300"
+          >
+            My Website
+          </span>
+        </div>
+
+      </div>
+
+
+      <!-- CENTER -->
+      <div class="hidden md:flex items-center absolute left-1/2 -translate-x-1/2">
+
+        <div
+          class="flex items-center gap-1 p-1 rounded-xl bg-white/[0.04] border border-white/10"
+        >
+
+          <button
+            id="desktopEditorTab"
+            type="button"
+            class="top-view-btn active"
+          >
+            <svg
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.8"
+              class="w-4 h-4"
+            >
+              <path d="m8 9-4 3 4 3"/>
+              <path d="m16 9 4 3-4 3"/>
+              <path d="m14 5-4 14"/>
+            </svg>
+
+            Editor
+          </button>
+
+          <button
+            id="desktopPreviewTab"
+            type="button"
+            class="top-view-btn"
+          >
+            <svg
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.8"
+              class="w-4 h-4"
+            >
+              <rect x="3" y="4" width="18" height="16" rx="2"/>
+              <path d="M3 9h18"/>
+              <path d="M8 4v5"/>
+            </svg>
+
+            Preview
+          </button>
+
+        </div>
+
+      </div>
+
+
+      <!-- RIGHT -->
+      <div class="flex items-center gap-1.5">
+
+        <!-- Dashboard -->
+        <button
+          id="dashboardBtn"
+          type="button"
+          class="icon-btn"
+          aria-label="Dashboard"
+          title="Dashboard"
+        >
+          <svg
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="1.8"
+            class="w-5 h-5"
+          >
+            <rect x="3" y="3" width="7" height="7" rx="1"/>
+            <rect x="14" y="3" width="7" height="7" rx="1"/>
+            <rect x="3" y="14" width="7" height="7" rx="1"/>
+            <rect x="14" y="14" width="7" height="7" rx="1"/>
+          </svg>
+        </button>
+
+
+        <!-- Run -->
+        <button
+          id="runBtn"
+          type="button"
+          class="icon-btn"
+          aria-label="Run preview"
+          title="Run preview"
+        >
+          <svg
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="1.8"
+            class="w-5 h-5"
+          >
+            <path
+              d="M8 5.5v13l10-6.5-10-6.5Z"
+              fill="currentColor"
+              stroke="none"
+            />
+          </svg>
+        </button>
+
+
+        <!-- Save -->
+        <button
+          id="saveBtn"
+          type="button"
+          class="icon-btn"
+          aria-label="Save"
+          title="Save"
+        >
+          <svg
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="1.8"
+            class="w-5 h-5"
+          >
+            <path d="M5 4h12l2 2v14H5z"/>
+            <path d="M8 4v6h8V4"/>
+            <path d="M8 20v-6h8v6"/>
+          </svg>
+        </button>
+
+
+        <!-- Account -->
+        <button
+          id="accountBtn"
+          type="button"
+          class="ml-1 w-9 h-9 rounded-full bg-gradient-to-br from-violet-500 to-blue-500 flex items-center justify-center text-sm font-semibold shadow-lg shadow-violet-500/10"
+          aria-label="Account"
+        >
+          <span id="accountInitial">
+            G
+          </span>
+        </button>
+
+      </div>
+
+    </header>
+
+
+    <!-- ======================================================= -->
+    <!-- MAIN AREA -->
+    <!-- ======================================================= -->
+
+    <main
+      id="mainArea"
+      class="h-[calc(100dvh-3.5rem)] flex relative"
+    >
+
+      <!-- ===================================================== -->
+      <!-- SIDEBAR -->
+      <!-- ===================================================== -->
+
+      <aside
+        id="sidebar"
+        class="sidebar w-64 shrink-0 border-r border-white/10 bg-[#0c0c19] flex flex-col z-30"
+      >
+
+        <!-- Project header -->
+        <div
+          class="h-14 border-b border-white/10 px-3 flex items-center justify-between"
+        >
+
+          <div class="min-w-0">
+
+            <div
+              id="sidebarProjectName"
+              class="text-sm font-medium truncate"
+            >
+              My Website
+            </div>
+
+            <div
+              id="sidebarProjectStatus"
+              class="text-[10px] text-emerald-400 mt-0.5"
+            >
+              Local project
+            </div>
+
+          </div>
+
+
+          <button
+            id="newProjectBtn"
+            type="button"
+            class="icon-btn-small"
+            title="New project"
+          >
+            <svg
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.8"
+              class="w-4 h-4"
+            >
+              <path d="M12 5v14M5 12h14"/>
+            </svg>
+          </button>
+
+        </div>
+
+
+        <!-- Files toolbar -->
+        <div
+          class="h-11 px-3 flex items-center justify-between border-b border-white/5"
+        >
+
+          <span
+            class="text-[11px] uppercase tracking-wider text-gray-500 font-medium"
+          >
+            Files
+          </span>
+
+
+          <div class="flex items-center gap-1">
+
+            <!-- New file -->
+            <button
+              id="newFileBtn"
+              type="button"
+              class="icon-btn-small"
+              title="New file"
+            >
+              <svg
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.8"
+                class="w-4 h-4"
+              >
+                <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+                <path d="M14 2v6h6"/>
+                <path d="M12 11v6"/>
+                <path d="M9 14h6"/>
+              </svg>
+            </button>
+
+
+            <!-- New folder -->
+            <button
+              id="newFolderBtn"
+              type="button"
+              class="icon-btn-small"
+              title="New folder"
+            >
+              <svg
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.8"
+                class="w-4 h-4"
+              >
+                <path d="M3 6a2 2 0 0 1 2-2h5l2 2h7a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>
+                <path d="M12 10v6"/>
+                <path d="M9 13h6"/>
+              </svg>
+            </button>
+
+          </div>
+
+        </div>
+
+
+        <!-- File tree -->
+        <div
+          id="fileTree"
+          class="flex-1 overflow-y-auto overflow-x-hidden p-2"
+        >
+
+          <!-- JS renders files here -->
+
+        </div>
+
+
+        <!-- Sidebar bottom -->
+        <div
+          class="border-t border-white/10 p-3"
+        >
+
+          <button
+            id="publishBtn"
+            type="button"
+            class="w-full h-10 rounded-xl bg-gradient-to-r from-violet-600 to-blue-600 hover:from-violet-500 hover:to-blue-500 transition flex items-center justify-center gap-2 text-sm font-medium shadow-lg shadow-violet-500/10"
+          >
+
+            <svg
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.8"
+              class="w-4 h-4"
+            >
+              <path d="M12 3v12"/>
+              <path d="m7 8 5-5 5 5"/>
+              <path d="M5 13v6a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-6"/>
+            </svg>
+
+            Publish Website
+
+          </button>
+
+        </div>
+
+      </aside>
+
+
+      <!-- Mobile sidebar overlay -->
+      <div
+        id="sidebarOverlay"
+        class="fixed inset-0 bg-black/60 backdrop-blur-sm z-20 hidden md:hidden"
+      ></div>
+
+
+      <!-- ===================================================== -->
+      <!-- WORKSPACE -->
+      <!-- ===================================================== -->
+
+      <section
+        id="workspace"
+        class="flex-1 min-w-0 min-h-0 flex flex-col bg-[#090912]"
+      >
+
+        <!-- =================================================== -->
+        <!-- EDITOR TABS -->
+        <!-- =================================================== -->
+
+        <div
+          id="editorTabs"
+          class="h-11 shrink-0 border-b border-white/10 bg-[#0c0c18] flex items-center overflow-x-auto"
+        >
+
+          <div
+            id="tabsContainer"
+            class="flex items-stretch h-full min-w-max"
+          >
+
+            <!-- JS renders tabs -->
+
+          </div>
+
+        </div>
+
+
+        <!-- =================================================== -->
+        <!-- EDITOR + PREVIEW -->
+        <!-- =================================================== -->
+
+        <div
+          id="workspaceContent"
+          class="flex-1 min-h-0 flex overflow-hidden"
+        >
+
+          <!-- ================================================= -->
+          <!-- CODE EDITOR -->
+          <!-- ================================================= -->
+
+          <section
+            id="editorPanel"
+            class="editor-panel flex-1 min-w-0 min-h-0 flex flex-col border-r border-white/10"
+          >
+
+            <!-- Editor header -->
+            <div
+              class="h-9 shrink-0 border-b border-white/5 bg-[#0b0b15] px-3 flex items-center justify-between"
+            >
+
+              <div
+                id="currentFileLabel"
+                class="flex items-center gap-2 text-xs text-gray-400"
+              >
+
+                <span
+                  id="currentFileIcon"
+                  class="text-orange-400"
+                >
+                  <svg
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="1.8"
+                    class="w-3.5 h-3.5"
+                  >
+                    <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+                    <path d="M14 2v6h6"/>
+                  </svg>
+                </span>
+
+                <span id="currentFileName">
+                  index.html
+                </span>
+
+              </div>
+
+
+              <div class="flex items-center gap-1">
+
+                <span
+                  id="saveStatus"
+                  class="text-[10px] text-gray-600"
+                >
+                  Saved locally
+                </span>
+
+              </div>
+
+            </div>
+
+
+            <!-- CodeMirror mounts here -->
+            <div
+              id="codeEditor"
+              class="flex-1 min-h-0 overflow-hidden"
+            ></div>
+
+          </section>
+
+
+          <!-- ================================================= -->
+          <!-- PREVIEW -->
+          <!-- ================================================= -->
+
+          <section
+            id="previewPanel"
+            class="preview-panel flex-1 min-w-0 min-h-0 flex flex-col bg-white"
+          >
+
+            <!-- Preview header -->
+            <div
+              class="h-9 shrink-0 border-b border-gray-200 bg-gray-50 px-3 flex items-center justify-between text-gray-600"
+            >
+
+              <div class="flex items-center gap-2">
+
+                <svg
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="1.8"
+                  class="w-4 h-4"
+                >
+                  <rect x="3" y="4" width="18" height="16" rx="2"/>
+                  <path d="M3 9h18"/>
+                </svg>
+
+                <span class="text-xs font-medium">
+                  Live Preview
+                </span>
+
+              </div>
+
+
+              <div class="flex items-center gap-1">
+
+                <button
+                  id="refreshPreviewBtn"
+                  type="button"
+                  class="preview-icon-btn"
+                  title="Refresh preview"
+                >
+                  <svg
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="1.8"
+                    class="w-4 h-4"
+                  >
+                    <path d="M20 11a8.1 8.1 0 0 0-15.5-2"/>
+                    <path d="M4 4v5h5"/>
+                    <path d="M4 13a8.1 8.1 0 0 0 15.5 2"/>
+                    <path d="M20 20v-5h-5"/>
+                  </svg>
+                </button>
+
+              </div>
+
+            </div>
+
+
+            <!-- Preview iframe -->
+            <div
+              class="flex-1 min-h-0 bg-white"
+            >
+
+              <iframe
+                id="previewFrame"
+                title="Website preview"
+                class="w-full h-full border-0 bg-white"
+                sandbox="allow-scripts"
+              ></iframe>
+
+            </div>
+
+          </section>
+
+        </div>
+
+
+        <!-- =================================================== -->
+        <!-- MOBILE BOTTOM BAR -->
+        <!-- =================================================== -->
+
+        <div
+          id="mobileBottomBar"
+          class="md:hidden h-12 shrink-0 border-t border-white/10 bg-[#0d0d1d] flex items-center justify-around"
+        >
+
+          <button
+            id="mobileEditorBtn"
+            type="button"
+            class="mobile-view-btn active"
+          >
+
+            <svg
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.8"
+              class="w-5 h-5"
+            >
+              <path d="m8 9-4 3 4 3"/>
+              <path d="m16 9 4 3-4 3"/>
+              <path d="m14 5-4 14"/>
+            </svg>
+
+            <span>Code</span>
+
+          </button>
+
+
+          <button
+            id="mobilePreviewBtn"
+            type="button"
+            class="mobile-view-btn"
+          >
+
+            <svg
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.8"
+              class="w-5 h-5"
+            >
+              <rect x="3" y="4" width="18" height="16" rx="2"/>
+              <path d="M3 9h18"/>
+            </svg>
+
+            <span>Preview</span>
+
+          </button>
+
+
+          <button
+            id="mobileRunBtn"
+            type="button"
+            class="mobile-view-btn"
+          >
+
+            <svg
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.8"
+              class="w-5 h-5"
+            >
+              <path
+                d="M8 5.5v13l10-6.5-10-6.5Z"
+                fill="currentColor"
+                stroke="none"
+              />
+            </svg>
+
+            <span>Run</span>
+
+          </button>
+
+        </div>
+
       </section>
+
     </main>
+
   </div>
 
-  <div id="toast" class="toast"></div>
 
-  <dialog id="authDialog">
-    <div class="dialog-head">
-      <strong id="authTitle">Sign in</strong>
-      <button class="icon-btn" onclick="authDialog.close()">×</button>
+  <!-- ========================================================= -->
+  <!-- ACCOUNT DROPDOWN -->
+  <!-- ========================================================= -->
+
+  <div
+    id="accountMenu"
+    class="hidden fixed top-16 right-3 w-64 rounded-2xl border border-white/10 bg-[#111120]/95 backdrop-blur-xl shadow-2xl shadow-black/40 z-[60] overflow-hidden"
+  >
+
+    <div class="p-4 border-b border-white/10">
+
+      <div
+        id="accountEmail"
+        class="text-sm font-medium truncate"
+      >
+        Guest
+      </div>
+
+      <div
+        id="accountStatus"
+        class="text-xs text-gray-500 mt-1"
+      >
+        Not signed in
+      </div>
+
     </div>
-    <form id="authForm">
-      <label>Email<input id="email" type="email" required placeholder="you@example.com"></label>
-      <label>Password<input id="password" type="password" minlength="6" required placeholder="Minimum 6 characters"></label>
-      <button class="btn primary full" type="submit" id="authSubmit">Sign in</button>
-    </form>
-    <button id="switchAuth" class="link-btn">Create an account instead</button>
-    <p class="hint">V1 uses browser-local accounts for the prototype. Your data stays on this device.</p>
-  </dialog>
 
-  <dialog id="promptDialog">
-    <div class="dialog-head">
-      <strong id="promptTitle">New file</strong>
-      <button class="icon-btn" onclick="promptDialog.close()">×</button>
+
+    <div class="p-2">
+
+      <button
+        id="accountSignInBtn"
+        type="button"
+        class="account-menu-btn"
+      >
+        <svg
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="1.8"
+          class="w-4 h-4"
+        >
+          <path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"/>
+          <path d="m10 17 5-5-5-5"/>
+          <path d="M15 12H3"/>
+        </svg>
+
+        Sign in
+      </button>
+
+
+      <button
+        id="accountSignOutBtn"
+        type="button"
+        class="account-menu-btn hidden"
+      >
+        <svg
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="1.8"
+          class="w-4 h-4"
+        >
+          <path d="M9 3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h4"/>
+          <path d="m16 17 5-5-5-5"/>
+          <path d="M21 12H9"/>
+        </svg>
+
+        Sign out
+      </button>
+
     </div>
-    <form id="promptForm">
-      <input id="promptInput" required>
-      <button class="btn primary full" type="submit">Create</button>
-    </form>
-  </dialog>
 
-  <script src="app.js"></script>
+  </div>
+
+
+  <!-- ========================================================= -->
+  <!-- AUTH MODAL -->
+  <!-- ========================================================= -->
+
+  <div
+    id="authModal"
+    class="modal-backdrop hidden"
+  >
+
+    <div
+      class="modal-card max-w-md w-[calc(100%-2rem)]"
+    >
+
+      <button
+        id="closeAuthModal"
+        type="button"
+        class="modal-close"
+        aria-label="Close"
+      >
+        <svg
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="1.8"
+          class="w-5 h-5"
+        >
+          <path d="m6 6 12 12M18 6 6 18"/>
+        </svg>
+      </button>
+
+
+      <div class="mb-6">
+
+        <div
+          class="w-12 h-12 rounded-2xl bg-gradient-to-br from-violet-500 to-blue-500 flex items-center justify-center mb-4"
+        >
+          <svg
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="1.8"
+            class="w-6 h-6"
+          >
+            <path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"/>
+            <path d="m10 17 5-5-5-5"/>
+            <path d="M15 12H3"/>
+          </svg>
+        </div>
+
+        <h2
+          id="authTitle"
+          class="text-xl font-semibold"
+        >
+          Sign in
+        </h2>
+
+        <p
+          id="authSubtitle"
+          class="text-sm text-gray-500 mt-1"
+        >
+          Sign in to sync your projects.
+        </p>
+
+      </div>
+
+
+      <form
+        id="authForm"
+        class="space-y-4"
+      >
+
+        <div>
+
+          <label
+            for="authEmail"
+            class="block text-xs text-gray-400 mb-2"
+          >
+            Email
+          </label>
+
+          <input
+            id="authEmail"
+            type="email"
+            autocomplete="email"
+            required
+            placeholder="you@example.com"
+            class="studio-input"
+          >
+
+        </div>
+
+
+        <div>
+
+          <label
+            for="authPassword"
+            class="block text-xs text-gray-400 mb-2"
+          >
+            Password
+          </label>
+
+          <input
+            id="authPassword"
+            type="password"
+            autocomplete="current-password"
+            required
+            placeholder="••••••••"
+            class="studio-input"
+          >
+
+        </div>
+
+
+        <div
+          id="authError"
+          class="hidden text-sm text-red-400 bg-red-500/10 border border-red-500/20 rounded-xl p-3"
+        ></div>
+
+
+        <button
+          id="authSubmitBtn"
+          type="submit"
+          class="w-full h-11 rounded-xl bg-gradient-to-r from-violet-600 to-blue-600 hover:from-violet-500 hover:to-blue-500 transition font-medium text-sm"
+        >
+          Sign in
+        </button>
+
+      </form>
+
+
+      <div class="text-center mt-5">
+
+        <button
+          id="authSwitchBtn"
+          type="button"
+          class="text-sm text-violet-400 hover:text-violet-300 transition"
+        >
+          Create an account
+        </button>
+
+      </div>
+
+    </div>
+
+  </div>
+
+
+  <!-- ========================================================= -->
+  <!-- NEW FILE MODAL -->
+  <!-- ========================================================= -->
+
+  <div
+    id="fileModal"
+    class="modal-backdrop hidden"
+  >
+
+    <div class="modal-card max-w-sm w-[calc(100%-2rem)]">
+
+      <button
+        id="closeFileModal"
+        type="button"
+        class="modal-close"
+      >
+        <svg
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="1.8"
+          class="w-5 h-5"
+        >
+          <path d="m6 6 12 12M18 6 6 18"/>
+        </svg>
+      </button>
+
+
+      <h2 class="text-lg font-semibold">
+        New file
+      </h2>
+
+      <p class="text-sm text-gray-500 mt-1 mb-5">
+        Add a file to your project.
+      </p>
+
+
+      <form
+        id="fileForm"
+        class="space-y-4"
+      >
+
+        <div>
+
+          <label
+            for="fileNameInput"
+            class="block text-xs text-gray-400 mb-2"
+          >
+            File name
+          </label>
+
+          <input
+            id="fileNameInput"
+            type="text"
+            required
+            autocomplete="off"
+            placeholder="about.html"
+            class="studio-input"
+          >
+
+        </div>
+
+
+        <div class="flex gap-2">
+
+          <button
+            id="cancelFileBtn"
+            type="button"
+            class="flex-1 h-11 rounded-xl bg-white/5 border border-white/10 hover:bg-white/10 transition text-sm"
+          >
+            Cancel
+          </button>
+
+          <button
+            type="submit"
+            class="flex-1 h-11 rounded-xl bg-violet-600 hover:bg-violet-500 transition text-sm font-medium"
+          >
+            Create file
+          </button>
+
+        </div>
+
+      </form>
+
+    </div>
+
+  </div>
+
+
+  <!-- ========================================================= -->
+  <!-- NEW FOLDER MODAL -->
+  <!-- ========================================================= -->
+
+  <div
+    id="folderModal"
+    class="modal-backdrop hidden"
+  >
+
+    <div class="modal-card max-w-sm w-[calc(100%-2rem)]">
+
+      <button
+        id="closeFolderModal"
+        type="button"
+        class="modal-close"
+      >
+        <svg
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="1.8"
+          class="w-5 h-5"
+        >
+          <path d="m6 6 12 12M18 6 6 18"/>
+        </svg>
+      </button>
+
+
+      <h2 class="text-lg font-semibold">
+        New folder
+      </h2>
+
+      <p class="text-sm text-gray-500 mt-1 mb-5">
+        Organize your project files.
+      </p>
+
+
+      <form
+        id="folderForm"
+        class="space-y-4"
+      >
+
+        <div>
+
+          <label
+            for="folderNameInput"
+            class="block text-xs text-gray-400 mb-2"
+          >
+            Folder name
+          </label>
+
+          <input
+            id="folderNameInput"
+            type="text"
+            required
+            autocomplete="off"
+            placeholder="components"
+            class="studio-input"
+          >
+
+        </div>
+
+
+        <div class="flex gap-2">
+
+          <button
+            id="cancelFolderBtn"
+            type="button"
+            class="flex-1 h-11 rounded-xl bg-white/5 border border-white/10 hover:bg-white/10 transition text-sm"
+          >
+            Cancel
+          </button>
+
+          <button
+            type="submit"
+            class="flex-1 h-11 rounded-xl bg-violet-600 hover:bg-violet-500 transition text-sm font-medium"
+          >
+            Create folder
+          </button>
+
+        </div>
+
+      </form>
+
+    </div>
+
+  </div>
+
+
+  <!-- ========================================================= -->
+  <!-- DASHBOARD MODAL -->
+  <!-- ========================================================= -->
+
+  <div
+    id="dashboardModal"
+    class="modal-backdrop hidden"
+  >
+
+    <div
+      class="modal-card max-w-3xl w-[calc(100%-2rem)] max-h-[85dvh] overflow-hidden flex flex-col"
+    >
+
+      <div
+        class="flex items-center justify-between pb-4 border-b border-white/10"
+      >
+
+        <div>
+
+          <h2 class="text-lg font-semibold">
+            Project Dashboard
+          </h2>
+
+          <p class="text-sm text-gray-500 mt-1">
+            Manage your WebCode Studio projects.
+          </p>
+
+        </div>
+
+
+        <button
+          id="closeDashboardModal"
+          type="button"
+          class="modal-close static"
+        >
+          <svg
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="1.8"
+            class="w-5 h-5"
+          >
+            <path d="m6 6 12 12M18 6 6 18"/>
+          </svg>
+        </button>
+
+      </div>
+
+
+      <div
+        id="projectList"
+        class="flex-1 overflow-y-auto py-5"
+      >
+
+        <!-- JS renders projects -->
+
+      </div>
+
+
+      <div
+        class="pt-4 border-t border-white/10"
+      >
+
+        <button
+          id="dashboardNewProjectBtn"
+          type="button"
+          class="w-full h-11 rounded-xl bg-violet-600 hover:bg-violet-500 transition flex items-center justify-center gap-2 text-sm font-medium"
+        >
+
+          <svg
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="1.8"
+            class="w-4 h-4"
+          >
+            <path d="M12 5v14M5 12h14"/>
+          </svg>
+
+          New Project
+
+        </button>
+
+      </div>
+
+    </div>
+
+  </div>
+
+
+  <!-- ========================================================= -->
+  <!-- NEW PROJECT MODAL -->
+  <!-- ========================================================= -->
+
+  <div
+    id="projectModal"
+    class="modal-backdrop hidden"
+  >
+
+    <div class="modal-card max-w-sm w-[calc(100%-2rem)]">
+
+      <button
+        id="closeProjectModal"
+        type="button"
+        class="modal-close"
+      >
+        <svg
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="1.8"
+          class="w-5 h-5"
+        >
+          <path d="m6 6 12 12M18 6 6 18"/>
+        </svg>
+      </button>
+
+
+      <h2 class="text-lg font-semibold">
+        New project
+      </h2>
+
+      <p class="text-sm text-gray-500 mt-1 mb-5">
+        Start a new website project.
+      </p>
+
+
+      <form
+        id="projectForm"
+        class="space-y-4"
+      >
+
+        <div>
+
+          <label
+            for="projectNameInput"
+            class="block text-xs text-gray-400 mb-2"
+          >
+            Project name
+          </label>
+
+          <input
+            id="projectNameInput"
+            type="text"
+            required
+            autocomplete="off"
+            placeholder="My Portfolio"
+            class="studio-input"
+          >
+
+        </div>
+
+
+        <div>
+
+          <label
+            for="projectDescriptionInput"
+            class="block text-xs text-gray-400 mb-2"
+          >
+            Description
+          </label>
+
+          <textarea
+            id="projectDescriptionInput"
+            rows="3"
+            placeholder="A personal website..."
+            class="studio-input resize-none"
+          ></textarea>
+
+        </div>
+
+
+        <div class="flex gap-2">
+
+          <button
+            id="cancelProjectBtn"
+            type="button"
+            class="flex-1 h-11 rounded-xl bg-white/5 border border-white/10 hover:bg-white/10 transition text-sm"
+          >
+            Cancel
+          </button>
+
+          <button
+            type="submit"
+            class="flex-1 h-11 rounded-xl bg-gradient-to-r from-violet-600 to-blue-600 hover:from-violet-500 hover:to-blue-500 transition text-sm font-medium"
+          >
+            Create project
+          </button>
+
+        </div>
+
+      </form>
+
+    </div>
+
+  </div>
+
+
+  <!-- ========================================================= -->
+  <!-- TOAST -->
+  <!-- ========================================================= -->
+
+  <div
+    id="toastContainer"
+    class="fixed bottom-16 md:bottom-5 right-4 z-[100] flex flex-col gap-2 pointer-events-none"
+  ></div>
+
+
+  <!-- ========================================================= -->
+  <!-- APP -->
+  <!-- ========================================================= -->
+
+  <script type="module" src="app.js"></script>
+
 </body>
 </html>
