@@ -1,1 +1,1211 @@
-*{box-sizing:border-box}html,body{margin:0;height:100%;font-family:Inter,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;background:#070b16;color:#eef2ff}button,input,textarea{font:inherit}.topbar{height:58px;display:flex;align-items:center;gap:12px;padding:8px 12px;border-bottom:1px solid #1d263b;background:#0b1020;position:relative;z-index:5}.brand{display:flex;align-items:center;gap:9px;font-weight:750;white-space:nowrap}.logo{display:grid;place-items:center;width:32px;height:32px;border-radius:9px;background:#7c3aed;color:white;font-size:13px}.top-actions{margin-left:auto;display:flex;align-items:center;gap:8px}.user-badge{font-size:12px;color:#aeb8d0;max-width:150px;overflow:hidden;text-overflow:ellipsis}.btn{border:1px solid #2a3550;background:#151d31;color:#eaf0ff;border-radius:9px;padding:9px 13px;cursor:pointer}.btn:hover{filter:brightness(1.12)}.btn.primary{background:#7c3aed;border-color:#7c3aed}.btn.ghost{background:transparent}.btn.small{padding:6px 10px;font-size:13px}.btn.full{width:100%}.icon-btn{border:0;background:transparent;color:#b9c4dd;font-size:22px;cursor:pointer;padding:4px 7px}.app-shell{height:calc(100% - 58px);display:flex}.sidebar{width:230px;flex:0 0 230px;border-right:1px solid #1d263b;background:#0a0f1d;display:flex;flex-direction:column}.side-head,.preview-head,.editor-head{height:42px;display:flex;align-items:center;justify-content:space-between;padding:0 12px;border-bottom:1px solid #1d263b;background:#0d1424}.file-list{padding:8px;overflow:auto;flex:1}.file-item{display:flex;align-items:center;gap:8px;padding:9px 10px;border-radius:8px;color:#aeb8d0;cursor:pointer;margin-bottom:3px}.file-item.active{background:#1b2540;color:white}.file-item .delete{margin-left:auto;opacity:.5}.side-foot{padding:10px;border-top:1px solid #1d263b}.workspace{min-width:0;flex:1;display:flex;flex-direction:column}.tabs{height:38px;display:flex;align-items:end;overflow:auto;background:#090e1a;border-bottom:1px solid #1d263b}.tab{height:37px;padding:10px 15px;color:#9aa7c3;border-right:1px solid #1d263b;white-space:nowrap}.tab.active{color:#fff;background:#10182a;border-top:2px solid #7c3aed}.editor-pane,.preview-pane{min-height:0;display:flex;flex-direction:column}.editor-pane{height:50%}.preview-pane{height:50%}.editor-head,.preview-head{flex:0 0 42px;font-size:13px}.editor-head span:last-child{color:#6f7d99;font-size:11px}.splitter{height:5px;background:#141c2d;cursor:row-resize}.editor-pane textarea{flex:1;width:100%;resize:none;border:0;outline:0;background:#080d18;color:#dce5fb;padding:14px;font-family:"SFMono-Regular",Consolas,Monaco,monospace;font-size:14px;line-height:1.55;tab-size:2}.preview-pane iframe{flex:1;width:100%;border:0;background:white}.toast{position:fixed;bottom:18px;left:50%;transform:translate(-50%,20px);background:#151d31;border:1px solid #34415f;padding:10px 15px;border-radius:10px;opacity:0;pointer-events:none;transition:.2s;z-index:20}.toast.show{opacity:1;transform:translate(-50%,0)}dialog{border:1px solid #2b3855;border-radius:14px;background:#0d1424;color:#eef2ff;width:min(390px,92vw);padding:0;box-shadow:0 20px 80px #0008}dialog::backdrop{background:#0009}.dialog-head{display:flex;justify-content:space-between;align-items:center;padding:14px 16px;border-bottom:1px solid #1d263b}dialog form{padding:16px}label{display:block;font-size:13px;color:#aeb8d0;margin-bottom:12px}label input,dialog form>input{display:block;width:100%;margin-top:7px;padding:11px;border:1px solid #2a3550;border-radius:8px;background:#080d18;color:white;outline:none}.link-btn{border:0;background:none;color:#a78bfa;cursor:pointer;margin:0 16px 12px}.hint{font-size:11px;line-height:1.5;color:#6f7d99;padding:0 16px 16px}@media(max-width:760px){.sidebar{position:fixed;top:58px;bottom:0;left:-240px;z-index:10;transition:left .2s;box-shadow:20px 0 60px #0008}.sidebar.open{left:0}.user-badge{display:none}.topbar{padding-left:7px}.editor-pane,.preview-pane{height:50%}.editor-pane textarea{font-size:13px;padding:10px}.brand{font-size:14px}}
+/* =========================================================
+   WEBCODE STUDIO V2
+   Global styles
+   ========================================================= */
+
+
+/* =========================================================
+   MOBILE ZOOM / BASE LAYOUT FIX
+   ========================================================= */
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+
+  background: #080812;
+}
+
+html {
+  touch-action: manipulation;
+}
+
+body {
+  min-height: 100dvh;
+  overscroll-behavior: none;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+button,
+input,
+textarea,
+select {
+  font-family: inherit;
+}
+
+/*
+  iOS Safari can automatically zoom when an input/control
+  has a font size below 16px.
+*/
+input,
+textarea,
+select,
+button {
+  font-size: 16px;
+}
+
+button {
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
+}
+
+input,
+textarea {
+  -webkit-appearance: none;
+  appearance: none;
+}
+
+
+/* =========================================================
+   SCROLLBARS
+   ========================================================= */
+
+* {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(139, 92, 246, 0.35) transparent;
+}
+
+*::-webkit-scrollbar {
+  width: 7px;
+  height: 7px;
+}
+
+*::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+*::-webkit-scrollbar-thumb {
+  background: rgba(139, 92, 246, 0.3);
+  border-radius: 999px;
+}
+
+*::-webkit-scrollbar-thumb:hover {
+  background: rgba(139, 92, 246, 0.5);
+}
+
+
+/* =========================================================
+   SELECTION
+   ========================================================= */
+
+::selection {
+  background: rgba(139, 92, 246, 0.35);
+  color: white;
+}
+
+
+/* =========================================================
+   APP
+   ========================================================= */
+
+#app {
+  position: relative;
+  isolation: isolate;
+}
+
+#mainArea {
+  min-width: 0;
+}
+
+
+/* =========================================================
+   TOP BAR
+   ========================================================= */
+
+#topbar {
+  -webkit-user-select: none;
+  user-select: none;
+}
+
+.icon-btn {
+  width: 38px;
+  height: 38px;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 11px;
+
+  color: #9ca3af;
+
+  background: transparent;
+  border: 1px solid transparent;
+
+  transition:
+    color 160ms ease,
+    background 160ms ease,
+    border-color 160ms ease,
+    transform 160ms ease;
+}
+
+.icon-btn:hover {
+  color: #ffffff;
+  background: rgba(255, 255, 255, 0.06);
+  border-color: rgba(255, 255, 255, 0.08);
+}
+
+.icon-btn:active {
+  transform: scale(0.94);
+}
+
+.icon-btn-small {
+  width: 30px;
+  height: 30px;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 8px;
+
+  color: #6b7280;
+
+  background: transparent;
+  border: 1px solid transparent;
+
+  transition:
+    color 160ms ease,
+    background 160ms ease,
+    transform 160ms ease;
+}
+
+.icon-btn-small:hover {
+  color: #d1d5db;
+  background: rgba(255, 255, 255, 0.06);
+}
+
+.icon-btn-small:active {
+  transform: scale(0.92);
+}
+
+
+/* =========================================================
+   TOP VIEW BUTTONS
+   ========================================================= */
+
+.top-view-btn {
+  min-height: 32px;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+
+  padding: 0 13px;
+
+  border-radius: 8px;
+
+  color: #6b7280;
+
+  font-size: 13px;
+  font-weight: 500;
+
+  transition:
+    color 160ms ease,
+    background 160ms ease,
+    transform 160ms ease;
+}
+
+.top-view-btn:hover {
+  color: #d1d5db;
+}
+
+.top-view-btn.active {
+  color: #ffffff;
+  background: rgba(139, 92, 246, 0.18);
+}
+
+.top-view-btn:active {
+  transform: scale(0.97);
+}
+
+
+/* =========================================================
+   SIDEBAR
+   ========================================================= */
+
+.sidebar {
+  min-height: 0;
+
+  transition:
+    transform 220ms ease,
+    width 220ms ease,
+    opacity 180ms ease;
+}
+
+#fileTree {
+  min-height: 0;
+}
+
+
+/* =========================================================
+   FILE TREE
+   ========================================================= */
+
+.file-tree-item {
+  position: relative;
+
+  min-height: 34px;
+
+  display: flex;
+  align-items: center;
+  gap: 7px;
+
+  padding: 0 8px;
+
+  border-radius: 8px;
+
+  color: #9ca3af;
+
+  font-size: 13px;
+
+  cursor: pointer;
+
+  transition:
+    background 150ms ease,
+    color 150ms ease;
+}
+
+.file-tree-item:hover {
+  color: #e5e7eb;
+  background: rgba(255, 255, 255, 0.045);
+}
+
+.file-tree-item.active {
+  color: #ffffff;
+  background: rgba(139, 92, 246, 0.15);
+}
+
+.file-tree-item .file-actions {
+  margin-left: auto;
+
+  opacity: 0;
+
+  transition: opacity 150ms ease;
+}
+
+.file-tree-item:hover .file-actions,
+.file-tree-item.active .file-actions {
+  opacity: 1;
+}
+
+.file-tree-folder {
+  color: #c4b5fd;
+}
+
+.file-tree-folder > .folder-arrow {
+  transition: transform 160ms ease;
+}
+
+.file-tree-folder.open > .folder-arrow {
+  transform: rotate(90deg);
+}
+
+.file-tree-children {
+  margin-left: 13px;
+  padding-left: 8px;
+
+  border-left: 1px solid rgba(255, 255, 255, 0.07);
+}
+
+
+/* =========================================================
+   WORKSPACE
+   ========================================================= */
+
+#workspace {
+  min-width: 0;
+  min-height: 0;
+}
+
+#workspaceContent {
+  min-width: 0;
+  min-height: 0;
+}
+
+
+/* =========================================================
+   EDITOR / PREVIEW PANELS
+   ========================================================= */
+
+.editor-panel,
+.preview-panel {
+  min-width: 0;
+  min-height: 0;
+
+  position: relative;
+}
+
+.editor-panel {
+  background: #080810;
+}
+
+.preview-panel {
+  overflow: hidden;
+}
+
+
+/* =========================================================
+   EDITOR TABS
+   ========================================================= */
+
+#editorTabs {
+  overflow-x: auto;
+  overflow-y: hidden;
+
+  -webkit-overflow-scrolling: touch;
+}
+
+#tabsContainer {
+  min-width: max-content;
+}
+
+.editor-tab {
+  position: relative;
+
+  height: 100%;
+
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+
+  padding: 0 13px;
+
+  border-right: 1px solid rgba(255, 255, 255, 0.06);
+
+  color: #6b7280;
+
+  font-size: 12px;
+
+  background: transparent;
+
+  transition:
+    color 160ms ease,
+    background 160ms ease;
+}
+
+.editor-tab:hover {
+  color: #d1d5db;
+  background: rgba(255, 255, 255, 0.025);
+}
+
+.editor-tab.active {
+  color: #f3f4f6;
+  background: #0b0b15;
+}
+
+.editor-tab.active::after {
+  content: "";
+
+  position: absolute;
+
+  left: 0;
+  right: 0;
+  bottom: 0;
+
+  height: 2px;
+
+  background: linear-gradient(
+    90deg,
+    #8b5cf6,
+    #3b82f6
+  );
+}
+
+.editor-tab-close {
+  width: 20px;
+  height: 20px;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 5px;
+
+  color: #6b7280;
+
+  transition:
+    color 140ms ease,
+    background 140ms ease;
+}
+
+.editor-tab-close:hover {
+  color: #ffffff;
+  background: rgba(255, 255, 255, 0.08);
+}
+
+
+/* =========================================================
+   CODEMIRROR
+   ========================================================= */
+
+#codeEditor {
+  min-height: 0;
+  min-width: 0;
+
+  position: relative;
+}
+
+#codeEditor .cm-editor {
+  height: 100%;
+  width: 100%;
+
+  outline: none;
+
+  background: #080810;
+}
+
+#codeEditor .cm-scroller {
+  overflow: auto;
+
+  font-family:
+    "SFMono-Regular",
+    "Cascadia Code",
+    "Roboto Mono",
+    Menlo,
+    Monaco,
+    Consolas,
+    monospace;
+
+  font-size: 14px;
+
+  line-height: 1.65;
+
+  -webkit-overflow-scrolling: touch;
+}
+
+#codeEditor .cm-content {
+  min-height: 100%;
+
+  padding-top: 12px;
+  padding-bottom: 40px;
+
+  caret-color: #c4b5fd;
+}
+
+#codeEditor .cm-gutters {
+  background: #080810;
+
+  border-right: 1px solid rgba(255, 255, 255, 0.05);
+
+  color: #4b5563;
+}
+
+#codeEditor .cm-lineNumbers .cm-gutterElement {
+  padding-left: 12px;
+  padding-right: 10px;
+
+  min-width: 42px;
+}
+
+#codeEditor .cm-activeLine {
+  background: rgba(139, 92, 246, 0.045);
+}
+
+#codeEditor .cm-activeLineGutter {
+  background: rgba(139, 92, 246, 0.07);
+  color: #9ca3af;
+}
+
+#codeEditor .cm-selectionBackground,
+#codeEditor .cm-content ::selection {
+  background: rgba(139, 92, 246, 0.28) !important;
+}
+
+#codeEditor .cm-focused .cm-matchingBracket {
+  background: rgba(139, 92, 246, 0.22);
+  outline: 1px solid rgba(139, 92, 246, 0.35);
+}
+
+
+/* =========================================================
+   STUDIO INPUTS
+   ========================================================= */
+
+.studio-input {
+  width: 100%;
+
+  min-height: 44px;
+
+  padding: 0 13px;
+
+  border-radius: 11px;
+
+  color: #f3f4f6;
+
+  background: rgba(255, 255, 255, 0.045);
+
+  border: 1px solid rgba(255, 255, 255, 0.09);
+
+  outline: none;
+
+  font-size: 16px !important;
+
+  transition:
+    border-color 160ms ease,
+    background 160ms ease,
+    box-shadow 160ms ease;
+}
+
+textarea.studio-input {
+  padding-top: 11px;
+  padding-bottom: 11px;
+}
+
+.studio-input::placeholder {
+  color: #4b5563;
+}
+
+.studio-input:hover {
+  background: rgba(255, 255, 255, 0.055);
+}
+
+.studio-input:focus {
+  background: rgba(255, 255, 255, 0.06);
+
+  border-color: rgba(139, 92, 246, 0.65);
+
+  box-shadow:
+    0 0 0 3px rgba(139, 92, 246, 0.1);
+}
+
+
+/* =========================================================
+   PREVIEW BUTTON
+   ========================================================= */
+
+.preview-icon-btn {
+  width: 30px;
+  height: 30px;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 7px;
+
+  color: #6b7280;
+
+  transition:
+    color 150ms ease,
+    background 150ms ease,
+    transform 150ms ease;
+}
+
+.preview-icon-btn:hover {
+  color: #111827;
+  background: #e5e7eb;
+}
+
+.preview-icon-btn:active {
+  transform: rotate(-25deg) scale(0.94);
+}
+
+
+/* =========================================================
+   MOBILE BOTTOM BAR
+   ========================================================= */
+
+#mobileBottomBar {
+  padding-bottom: env(safe-area-inset-bottom);
+  height: calc(3rem + env(safe-area-inset-bottom));
+}
+
+.mobile-view-btn {
+  height: 44px;
+  min-width: 72px;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+
+  color: #6b7280;
+
+  font-size: 11px;
+
+  border-radius: 9px;
+
+  transition:
+    color 160ms ease,
+    background 160ms ease,
+    transform 160ms ease;
+}
+
+.mobile-view-btn.active {
+  color: #c4b5fd;
+}
+
+.mobile-view-btn:active {
+  transform: scale(0.94);
+}
+
+
+/* =========================================================
+   ACCOUNT MENU
+   ========================================================= */
+
+#accountMenu {
+  animation: menuIn 160ms ease both;
+}
+
+.account-menu-btn {
+  width: 100%;
+  height: 42px;
+
+  display: flex;
+  align-items: center;
+  gap: 10px;
+
+  padding: 0 11px;
+
+  border-radius: 9px;
+
+  color: #9ca3af;
+
+  font-size: 14px;
+
+  text-align: left;
+
+  transition:
+    color 150ms ease,
+    background 150ms ease;
+}
+
+.account-menu-btn:hover {
+  color: #ffffff;
+  background: rgba(255, 255, 255, 0.06);
+}
+
+
+/* =========================================================
+   MODALS
+   ========================================================= */
+
+.modal-backdrop {
+  position: fixed;
+  inset: 0;
+
+  z-index: 80;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 16px;
+
+  background: rgba(0, 0, 0, 0.7);
+
+  backdrop-filter: blur(7px);
+  -webkit-backdrop-filter: blur(7px);
+
+  animation: fadeIn 160ms ease both;
+}
+
+.modal-card {
+  position: relative;
+
+  background:
+    radial-gradient(
+      circle at top right,
+      rgba(124, 58, 237, 0.08),
+      transparent 35%
+    ),
+    #111120;
+
+  border: 1px solid rgba(255, 255, 255, 0.1);
+
+  border-radius: 20px;
+
+  padding: 22px;
+
+  box-shadow:
+    0 25px 80px rgba(0, 0, 0, 0.55);
+
+  animation: modalIn 190ms cubic-bezier(0.2, 0.8, 0.2, 1) both;
+}
+
+.modal-close {
+  position: absolute;
+
+  top: 14px;
+  right: 14px;
+
+  width: 34px;
+  height: 34px;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 9px;
+
+  color: #6b7280;
+
+  background: transparent;
+
+  transition:
+    color 150ms ease,
+    background 150ms ease,
+    transform 150ms ease;
+}
+
+.modal-close:hover {
+  color: #ffffff;
+  background: rgba(255, 255, 255, 0.07);
+}
+
+.modal-close:active {
+  transform: scale(0.9);
+}
+
+.modal-close.static {
+  position: static;
+}
+
+
+/* =========================================================
+   PROJECT CARDS
+   ========================================================= */
+
+.project-card {
+  width: 100%;
+
+  padding: 15px;
+
+  border-radius: 14px;
+
+  border: 1px solid rgba(255, 255, 255, 0.08);
+
+  background: rgba(255, 255, 255, 0.025);
+
+  text-align: left;
+
+  transition:
+    background 160ms ease,
+    border-color 160ms ease,
+    transform 160ms ease;
+}
+
+.project-card:hover {
+  background: rgba(139, 92, 246, 0.07);
+
+  border-color: rgba(139, 92, 246, 0.25);
+
+  transform: translateY(-1px);
+}
+
+.project-card:active {
+  transform: scale(0.99);
+}
+
+
+/* =========================================================
+   TOASTS
+   ========================================================= */
+
+.toast {
+  pointer-events: auto;
+
+  min-width: 220px;
+  max-width: min(360px, calc(100vw - 2rem));
+
+  display: flex;
+  align-items: center;
+  gap: 10px;
+
+  padding: 12px 14px;
+
+  border-radius: 12px;
+
+  background: rgba(20, 20, 34, 0.96);
+
+  border: 1px solid rgba(255, 255, 255, 0.1);
+
+  box-shadow:
+    0 15px 40px rgba(0, 0, 0, 0.35);
+
+  color: #d1d5db;
+
+  font-size: 13px;
+
+  animation:
+    toastIn 220ms ease both;
+}
+
+.toast.removing {
+  animation: toastOut 180ms ease both;
+}
+
+
+/* =========================================================
+   ANIMATIONS
+   ========================================================= */
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes modalIn {
+  from {
+    opacity: 0;
+    transform: translateY(12px) scale(0.97);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes menuIn {
+  from {
+    opacity: 0;
+    transform: translateY(-5px) scale(0.98);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes toastIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px) scale(0.97);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes toastOut {
+  from {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+
+  to {
+    opacity: 0;
+    transform: translateY(8px) scale(0.97);
+  }
+}
+
+@keyframes pop {
+  0% {
+    transform: scale(0.96);
+    opacity: 0;
+  }
+
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+
+/* =========================================================
+   MOBILE
+   ========================================================= */
+
+@media (max-width: 767px) {
+
+  /*
+    The sidebar becomes a drawer.
+  */
+
+  .sidebar {
+    position: fixed;
+
+    top: 3.5rem;
+    bottom: 0;
+    left: 0;
+
+    width: min(82vw, 310px);
+
+    transform: translateX(-105%);
+
+    box-shadow:
+      15px 0 50px rgba(0, 0, 0, 0.45);
+
+    z-index: 50;
+  }
+
+  .sidebar.mobile-open {
+    transform: translateX(0);
+  }
+
+
+  /*
+    Editor and preview become a single visible panel
+    controlled by the mobile buttons.
+  */
+
+  #workspaceContent {
+    position: relative;
+    display: block;
+  }
+
+  .editor-panel,
+  .preview-panel {
+    position: absolute;
+
+    inset: 0;
+
+    width: 100%;
+    height: 100%;
+
+    border: 0;
+  }
+
+  .editor-panel {
+    display: flex;
+  }
+
+  .preview-panel {
+    display: none;
+  }
+
+  #workspace.preview-mode .editor-panel {
+    display: none;
+  }
+
+  #workspace.preview-mode .preview-panel {
+    display: flex;
+  }
+
+
+  /*
+    Mobile CodeMirror font must remain >=16px
+    to avoid iOS zoom behavior.
+  */
+
+  #codeEditor .cm-scroller {
+    font-size: 16px;
+
+    line-height: 1.65;
+  }
+
+  #codeEditor .cm-content {
+    padding-top: 13px;
+    padding-bottom: 50px;
+  }
+
+  #codeEditor .cm-lineNumbers .cm-gutterElement {
+    min-width: 38px;
+
+    padding-left: 8px;
+    padding-right: 8px;
+  }
+
+
+  /*
+    Mobile tabs.
+  */
+
+  .editor-tab {
+    padding-left: 11px;
+    padding-right: 11px;
+  }
+
+
+  /*
+    Keep modals safely inside mobile viewport.
+  */
+
+  .modal-backdrop {
+    align-items: center;
+
+    padding:
+      max(12px, env(safe-area-inset-top))
+      12px
+      max(12px, env(safe-area-inset-bottom));
+  }
+
+  .modal-card {
+    max-height: calc(100dvh - 24px);
+
+    overflow-y: auto;
+
+    border-radius: 18px;
+
+    padding: 19px;
+  }
+
+
+  /*
+    Slightly smaller project cards.
+  */
+
+  .project-card {
+    padding: 13px;
+  }
+
+
+  /*
+    Toast positioning.
+  */
+
+  #toastContainer {
+    left: 12px;
+    right: 12px;
+
+    bottom:
+      calc(
+        4rem +
+        env(safe-area-inset-bottom)
+      );
+  }
+
+  .toast {
+    width: 100%;
+    min-width: 0;
+  }
+}
+
+
+/* =========================================================
+   SMALL PHONES
+   ========================================================= */
+
+@media (max-width: 390px) {
+
+  .icon-btn {
+    width: 36px;
+    height: 36px;
+  }
+
+  #topbar {
+    padding-left: 7px;
+    padding-right: 7px;
+  }
+
+  .modal-card {
+    padding: 17px;
+  }
+
+  .mobile-view-btn {
+    min-width: 62px;
+  }
+
+}
+
+
+/* =========================================================
+   TABLET / SMALL DESKTOP
+   ========================================================= */
+
+@media (min-width: 768px) and (max-width: 1100px) {
+
+  .sidebar {
+    width: 220px;
+  }
+
+  #codeEditor .cm-scroller {
+    font-size: 14px;
+  }
+
+}
+
+
+/* =========================================================
+   REDUCED MOTION
+   ========================================================= */
+
+@media (prefers-reduced-motion: reduce) {
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+
+    transition-duration: 0.001ms !important;
+
+    scroll-behavior: auto !important;
+  }
+
+}
+
+
+/* =========================================================
+   SAFE AREA SUPPORT
+   ========================================================= */
+
+@supports (padding: env(safe-area-inset-top)) {
+
+  #topbar {
+    padding-top: env(safe-area-inset-top);
+
+    height:
+      calc(
+        3.5rem +
+        env(safe-area-inset-top)
+      );
+  }
+
+  #mainArea {
+    height:
+      calc(
+        100dvh -
+        3.5rem -
+        env(safe-area-inset-top)
+      );
+  }
+
+}
+
+
+/* =========================================================
+   FOCUS ACCESSIBILITY
+   ========================================================= */
+
+button:focus-visible,
+input:focus-visible,
+textarea:focus-visible,
+select:focus-visible {
+  outline: 2px solid rgba(139, 92, 246, 0.75);
+
+  outline-offset: 2px;
+}
+
+
+/* =========================================================
+   DISABLED STATES
+   ========================================================= */
+
+button:disabled {
+  cursor: not-allowed;
+
+  opacity: 0.5;
+
+  transform: none !important;
+}
+
+
+/* =========================================================
+   HIDDEN UTILITY
+   ========================================================= */
+
+.hidden {
+  display: none !important;
+}
