@@ -32,14 +32,14 @@ import {
 } from "https://esm.sh/@codemirror/view@6.36.5";
 
 import {
+  basicSetup
+} from "https://esm.sh/codemirror@6.0.1";
+
+import {
   defaultKeymap,
   history,
   historyKeymap
 } from "https://esm.sh/@codemirror/commands@6.8.1";
-
-import {
-  basicSetup
-} from "https://esm.sh/codemirror@6.0.1";
 
 import {
   html
@@ -62,33 +62,34 @@ import {
    FIREBASE
    ========================================================= */
 
-const firebaseApp = initializeApp(firebaseConfig);
-const auth = getAuth(firebaseApp);
+const firebaseApp =
+  initializeApp(firebaseConfig);
+
+const auth =
+  getAuth(firebaseApp);
 
 
 /* =========================================================
-   DOM HELPERS
+   HELPERS
    ========================================================= */
 
-const $ = (id) => document.getElementById(id);
+const $ = (id) =>
+  document.getElementById(id);
 
-const elements = {
-  app: $("app"),
 
-  topProjectName: $("topProjectName"),
-  sidebarProjectName: $("sidebarProjectName"),
-  sidebarProjectStatus: $("sidebarProjectStatus"),
+/* =========================================================
+   DOM
+   ========================================================= */
 
-  mobileMenuBtn: $("mobileMenuBtn"),
+const el = {
+
   sidebar: $("sidebar"),
   sidebarOverlay: $("sidebarOverlay"),
 
+  mobileMenuBtn: $("mobileMenuBtn"),
+
   fileTree: $("fileTree"),
   tabsContainer: $("tabsContainer"),
-
-  newFileBtn: $("newFileBtn"),
-  newFolderBtn: $("newFolderBtn"),
-  newProjectBtn: $("newProjectBtn"),
 
   codeEditor: $("codeEditor"),
 
@@ -105,109 +106,261 @@ const elements = {
   saveBtn: $("saveBtn"),
 
   dashboardBtn: $("dashboardBtn"),
-  dashboardModal: $("dashboardModal"),
-  closeDashboardModal: $("closeDashboardModal"),
-  projectList: $("projectList"),
-  dashboardNewProjectBtn: $("dashboardNewProjectBtn"),
 
-  projectModal: $("projectModal"),
-  closeProjectModal: $("closeProjectModal"),
-  cancelProjectBtn: $("cancelProjectBtn"),
-  projectForm: $("projectForm"),
-  projectNameInput: $("projectNameInput"),
-  projectDescriptionInput: $("projectDescriptionInput"),
+  dashboardModal:
+    $("dashboardModal"),
 
-  fileModal: $("fileModal"),
-  closeFileModal: $("closeFileModal"),
-  cancelFileBtn: $("cancelFileBtn"),
-  fileForm: $("fileForm"),
-  fileNameInput: $("fileNameInput"),
+  closeDashboardModal:
+    $("closeDashboardModal"),
 
-  folderModal: $("folderModal"),
-  closeFolderModal: $("closeFolderModal"),
-  cancelFolderBtn: $("cancelFolderBtn"),
-  folderForm: $("folderForm"),
-  folderNameInput: $("folderNameInput"),
+  projectList:
+    $("projectList"),
 
-  accountBtn: $("accountBtn"),
-  accountInitial: $("accountInitial"),
-  accountMenu: $("accountMenu"),
-  accountEmail: $("accountEmail"),
-  accountStatus: $("accountStatus"),
-  accountSignInBtn: $("accountSignInBtn"),
-  accountSignOutBtn: $("accountSignOutBtn"),
+  dashboardNewProjectBtn:
+    $("dashboardNewProjectBtn"),
 
-  authModal: $("authModal"),
-  closeAuthModal: $("closeAuthModal"),
-  authTitle: $("authTitle"),
-  authSubtitle: $("authSubtitle"),
-  authForm: $("authForm"),
-  authEmail: $("authEmail"),
-  authPassword: $("authPassword"),
-  authSubmitBtn: $("authSubmitBtn"),
-  authSwitchBtn: $("authSwitchBtn"),
-  authError: $("authError"),
+  newFileBtn:
+    $("newFileBtn"),
 
-  publishBtn: $("publishBtn"),
+  newFolderBtn:
+    $("newFolderBtn"),
 
-  desktopEditorTab: $("desktopEditorTab"),
-  desktopPreviewTab: $("desktopPreviewTab"),
+  newProjectBtn:
+    $("newProjectBtn"),
 
-  mobileEditorBtn: $("mobileEditorBtn"),
-  mobilePreviewBtn: $("mobilePreviewBtn"),
-  mobileRunBtn: $("mobileRunBtn"),
+  projectModal:
+    $("projectModal"),
 
-  toastContainer: $("toastContainer")
+  closeProjectModal:
+    $("closeProjectModal"),
+
+  cancelProjectBtn:
+    $("cancelProjectBtn"),
+
+  projectForm:
+    $("projectForm"),
+
+  projectNameInput:
+    $("projectNameInput"),
+
+  projectDescriptionInput:
+    $("projectDescriptionInput"),
+
+  fileModal:
+    $("fileModal"),
+
+  closeFileModal:
+    $("closeFileModal"),
+
+  cancelFileBtn:
+    $("cancelFileBtn"),
+
+  fileForm:
+    $("fileForm"),
+
+  fileNameInput:
+    $("fileNameInput"),
+
+  folderModal:
+    $("folderModal"),
+
+  closeFolderModal:
+    $("closeFolderModal"),
+
+  cancelFolderBtn:
+    $("cancelFolderBtn"),
+
+  folderForm:
+    $("folderForm"),
+
+  folderNameInput:
+    $("folderNameInput"),
+
+  accountBtn:
+    $("accountBtn"),
+
+  accountMenu:
+    $("accountMenu"),
+
+  accountInitial:
+    $("accountInitial"),
+
+  accountEmail:
+    $("accountEmail"),
+
+  accountStatus:
+    $("accountStatus"),
+
+  accountSignInBtn:
+    $("accountSignInBtn"),
+
+  accountSignOutBtn:
+    $("accountSignOutBtn"),
+
+  authModal:
+    $("authModal"),
+
+  closeAuthModal:
+    $("closeAuthModal"),
+
+  authTitle:
+    $("authTitle"),
+
+  authSubtitle:
+    $("authSubtitle"),
+
+  authForm:
+    $("authForm"),
+
+  authEmail:
+    $("authEmail"),
+
+  authPassword:
+    $("authPassword"),
+
+  authSubmitBtn:
+    $("authSubmitBtn"),
+
+  authSwitchBtn:
+    $("authSwitchBtn"),
+
+  authError:
+    $("authError"),
+
+  publishBtn:
+    $("publishBtn"),
+
+  desktopEditorTab:
+    $("desktopEditorTab"),
+
+  desktopPreviewTab:
+    $("desktopPreviewTab"),
+
+  mobileEditorBtn:
+    $("mobileEditorBtn"),
+
+  mobilePreviewBtn:
+    $("mobilePreviewBtn"),
+
+  mobileRunBtn:
+    $("mobileRunBtn"),
+
+  topProjectName:
+    $("topProjectName"),
+
+  sidebarProjectName:
+    $("sidebarProjectName"),
+
+  sidebarProjectStatus:
+    $("sidebarProjectStatus"),
+
+  toastContainer:
+    $("toastContainer")
+
 };
 
 
 /* =========================================================
-   APPLICATION STATE
+   STATE
    ========================================================= */
-
-const STORAGE_KEY = "webcode-studio-v2";
-
-let currentUser = null;
-
-let authMode = "signin";
 
 let editorView = null;
 
 let currentFileId = null;
 
-let autosaveTimer = null;
+let currentUser = null;
+
+let authMode = "signin";
+
+let saveTimer = null;
+
+let deleteTarget = null;
 
 let projectState = null;
+
+
+/* =========================================================
+   STORAGE
+   ========================================================= */
+
+const PROJECT_KEY =
+  "webcode-studio-v2-project";
+
+const PROJECTS_KEY =
+  "webcode-studio-v2-projects";
+
+
+/* =========================================================
+   ID
+   ========================================================= */
+
+function createId() {
+
+  if (
+    crypto &&
+    crypto.randomUUID
+  ) {
+    return crypto.randomUUID();
+  }
+
+  return (
+    Date.now().toString(36) +
+    Math.random()
+      .toString(36)
+      .slice(2)
+  );
+
+}
 
 
 /* =========================================================
    DEFAULT PROJECT
    ========================================================= */
 
-const DEFAULT_PROJECT = {
-  id: createId(),
+function createDefaultProject() {
 
-  name: "My Website",
+  const htmlId =
+    createId();
 
-  description: "My first WebCode Studio website.",
+  const cssId =
+    createId();
 
-  createdAt: new Date().toISOString(),
+  const jsId =
+    createId();
 
-  updatedAt: new Date().toISOString(),
 
-  files: [
-    {
-      id: createId(),
+  return {
 
-      name: "index.html",
+    id: createId(),
 
-      type: "file",
+    name:
+      "My Website",
 
-      language: "html",
+    description:
+      "My first WebCode Studio website.",
 
-      parent: null,
+    createdAt:
+      new Date().toISOString(),
 
-      content:
+    updatedAt:
+      new Date().toISOString(),
+
+    files: [
+
+      {
+
+        id: htmlId,
+
+        name:
+          "index.html",
+
+        language:
+          "html",
+
+        parent:
+          null,
+
+        content:
 `<!DOCTYPE html>
 <html lang="en">
 <head>
@@ -219,33 +372,40 @@ const DEFAULT_PROJECT = {
 <body>
 
   <main class="hero">
-    <h1>Welcome to WebCode Studio</h1>
+
+    <h1>
+      Welcome to WebCode Studio
+    </h1>
 
     <p>
-      Start building your website.
+      Edit this code and press Run.
     </p>
 
     <button id="helloButton">
-      Click me
+      Test JavaScript
     </button>
+
   </main>
 
 </body>
 </html>`
-    },
 
-    {
-      id: createId(),
+      },
 
-      name: "style.css",
+      {
 
-      type: "file",
+        id: cssId,
 
-      language: "css",
+        name:
+          "style.css",
 
-      parent: null,
+        language:
+          "css",
 
-      content:
+        parent:
+          null,
+
+        content:
 `* {
   box-sizing: border-box;
 }
@@ -257,9 +417,7 @@ body {
   display: grid;
   place-items: center;
 
-  font-family:
-    Arial,
-    sans-serif;
+  font-family: Arial, sans-serif;
 
   background:
     linear-gradient(
@@ -281,139 +439,104 @@ body {
   border-radius: 24px;
 
   background:
-    rgba(255, 255, 255, 0.08);
+    rgba(255,255,255,.08);
 
   border:
     1px solid
-    rgba(255, 255, 255, 0.12);
+    rgba(255,255,255,.12);
 
-  backdrop-filter: blur(20px);
+  backdrop-filter:
+    blur(20px);
 
   box-shadow:
     0 30px 80px
-    rgba(0, 0, 0, 0.35);
+    rgba(0,0,0,.35);
 }
 
 h1 {
-  margin-top: 0;
-
-  font-size: clamp(
-    2rem,
-    6vw,
-    4rem
-  );
+  font-size:
+    clamp(2rem, 6vw, 4rem);
 }
 
 p {
-  color: #cbd5e1;
+  color:
+    #cbd5e1;
 
-  line-height: 1.7;
+  line-height:
+    1.7;
 }
 
 button {
-  margin-top: 20px;
-
   padding:
-    12px
-    20px;
+    12px 20px;
 
   border: 0;
 
-  border-radius: 12px;
+  border-radius:
+    12px;
 
   background:
     #8b5cf6;
 
   color: white;
 
-  font-size: 16px;
+  font-size:
+    16px;
 
-  cursor: pointer;
+  cursor:
+    pointer;
 }
 
 button:hover {
   background:
     #7c3aed;
 }`
-    },
 
-    {
-      id: createId(),
+      },
 
-      name: "script.js",
+      {
 
-      type: "file",
+        id: jsId,
 
-      language: "javascript",
+        name:
+          "script.js",
 
-      parent: null,
+        language:
+          "javascript",
 
-      content:
+        parent:
+          null,
+
+        content:
 `const button =
   document.getElementById(
     "helloButton"
   );
 
 if (button) {
+
   button.addEventListener(
     "click",
     () => {
+
       button.textContent =
-        "It works!";
+        "JavaScript works!";
+
     }
   );
+
 }`
-    }
-  ],
 
-  folders: [],
+      }
 
-  activeFileId: null
-};
+    ],
 
+    folders: [],
 
-/* =========================================================
-   ID GENERATOR
-   ========================================================= */
+    activeFileId:
+      htmlId
 
-function createId() {
-  if (
-    window.crypto &&
-    typeof window.crypto.randomUUID === "function"
-  ) {
-    return window.crypto.randomUUID();
-  }
-
-  return (
-    Date.now().toString(36) +
-    Math.random().toString(36).slice(2)
-  );
-}
-
-
-/* =========================================================
-   INITIALIZATION
-   ========================================================= */
-
-document.addEventListener(
-  "DOMContentLoaded",
-  init
-);
-
-
-function init() {
-
-  loadProject();
-
-  setupEvents();
-
-  initializeEditor();
-
-  renderEverything();
-
-  setupFirebaseAuth();
-
-  updatePreview();
+  };
 
 }
 
@@ -424,40 +547,32 @@ function init() {
 
 function loadProject() {
 
-  let stored = null;
-
   try {
-    stored = localStorage.getItem(
-      STORAGE_KEY
-    );
-  } catch (error) {
-    console.warn(
-      "Local storage unavailable.",
-      error
-    );
-  }
 
-
-  if (stored) {
-
-    try {
-
-      projectState =
-        JSON.parse(stored);
-
-    } catch (error) {
-
-      console.warn(
-        "Could not parse saved project.",
-        error
+    const saved =
+      localStorage.getItem(
+        PROJECT_KEY
       );
 
+
+    if (saved) {
+
       projectState =
-        createDefaultProject();
+        JSON.parse(saved);
 
     }
 
-  } else {
+  } catch (error) {
+
+    console.error(
+      "Could not load project:",
+      error
+    );
+
+  }
+
+
+  if (!projectState) {
 
     projectState =
       createDefaultProject();
@@ -465,765 +580,84 @@ function loadProject() {
   }
 
 
-  ensureProjectIntegrity();
+  if (
+    !Array.isArray(
+      projectState.files
+    )
+  ) {
+
+    projectState.files = [];
+
+  }
 
 
-  if (!projectState.activeFileId) {
+  if (
+    !Array.isArray(
+      projectState.folders
+    )
+  ) {
 
-    const indexFile =
-      projectState.files.find(
-        file =>
-          file.name === "index.html"
-      );
-
-    if (indexFile) {
-      projectState.activeFileId =
-        indexFile.id;
-    } else if (
-      projectState.files.length
-    ) {
-      projectState.activeFileId =
-        projectState.files[0].id;
-    }
+    projectState.folders = [];
 
   }
 
 
   currentFileId =
-    projectState.activeFileId;
+    projectState.activeFileId ||
+    projectState.files[0]?.id ||
+    null;
 
-}
 
+  saveProject();
 
-function createDefaultProject() {
-
-  const copy =
-    JSON.parse(
-      JSON.stringify(DEFAULT_PROJECT)
-    );
-
-  copy.id = createId();
-
-  copy.files =
-    copy.files.map(file => ({
-      ...file,
-      id: createId()
-    }));
-
-  copy.activeFileId =
-    copy.files[0]?.id || null;
-
-  return copy;
 }
 
 
 /* =========================================================
-   PROJECT INTEGRITY
+   SAVE PROJECT
    ========================================================= */
 
-function ensureProjectIntegrity() {
+function saveProject() {
 
   if (!projectState) {
-    projectState =
-      createDefaultProject();
-
     return;
   }
 
-  if (
-    !projectState.files ||
-    !Array.isArray(projectState.files)
-  ) {
-    projectState.files = [];
-  }
-
-  if (
-    !projectState.folders ||
-    !Array.isArray(projectState.folders)
-  ) {
-    projectState.folders = [];
-  }
-
-  if (!projectState.name) {
-    projectState.name =
-      "My Website";
-  }
-
-  if (!projectState.id) {
-    projectState.id =
-      createId();
-  }
-
-  if (!projectState.createdAt) {
-    projectState.createdAt =
-      new Date().toISOString();
-  }
-
-  if (!projectState.updatedAt) {
-    projectState.updatedAt =
-      new Date().toISOString();
-  }
-
-}
-
-
-/* =========================================================
-   SAVE LOCAL PROJECT
-   ========================================================= */
-
-function saveProjectLocal() {
-
-  projectState.updatedAt =
-    new Date().toISOString();
 
   projectState.activeFileId =
     currentFileId;
 
+
+  projectState.updatedAt =
+    new Date().toISOString();
+
+
   try {
 
     localStorage.setItem(
-      STORAGE_KEY,
+      PROJECT_KEY,
       JSON.stringify(
         projectState
       )
     );
 
-    setSaveStatus(
-      "Saved locally"
-    );
+    if (
+      el.saveStatus
+    ) {
+
+      el.saveStatus.textContent =
+        "Saved locally";
+
+    }
 
   } catch (error) {
 
     console.error(
-      "Could not save project.",
+      "Save error:",
       error
     );
 
-    setSaveStatus(
-      "Local save failed"
-    );
-
-    showToast(
-      "Could not save locally.",
-      "error"
-    );
-
   }
-
-}
-
-
-/* =========================================================
-   SETUP EVENTS
-   ========================================================= */
-
-function setupEvents() {
-
-  /* Mobile sidebar */
-
-  elements.mobileMenuBtn?.addEventListener(
-    "click",
-    toggleSidebar
-  );
-
-  elements.sidebarOverlay?.addEventListener(
-    "click",
-    closeSidebar
-  );
-
-
-  /* Files */
-
-  elements.newFileBtn?.addEventListener(
-    "click",
-    openFileModal
-  );
-
-  elements.newFolderBtn?.addEventListener(
-    "click",
-    openFolderModal
-  );
-
-
-  /* Projects */
-
-  elements.newProjectBtn?.addEventListener(
-    "click",
-    openProjectModal
-  );
-
-  elements.dashboardNewProjectBtn?.addEventListener(
-    "click",
-    () => {
-
-      closeDashboardModal();
-
-      openProjectModal();
-
-    }
-  );
-
-
-  /* Dashboard */
-
-  elements.dashboardBtn?.addEventListener(
-    "click",
-    openDashboardModal
-  );
-
-  elements.closeDashboardModal?.addEventListener(
-    "click",
-    closeDashboardModal
-  );
-
-
-  /* Project modal */
-
-  elements.closeProjectModal?.addEventListener(
-    "click",
-    closeProjectModal
-  );
-
-  elements.cancelProjectBtn?.addEventListener(
-    "click",
-    closeProjectModal
-  );
-
-  elements.projectForm?.addEventListener(
-    "submit",
-    handleCreateProject
-  );
-
-
-  /* File modal */
-
-  elements.closeFileModal?.addEventListener(
-    "click",
-    closeFileModal
-  );
-
-  elements.cancelFileBtn?.addEventListener(
-    "click",
-    closeFileModal
-  );
-
-  elements.fileForm?.addEventListener(
-    "submit",
-    handleCreateFile
-  );
-
-
-  /* Folder modal */
-
-  elements.closeFolderModal?.addEventListener(
-    "click",
-    closeFolderModal
-  );
-
-  elements.cancelFolderBtn?.addEventListener(
-    "click",
-    closeFolderModal
-  );
-
-  elements.folderForm?.addEventListener(
-    "submit",
-    handleCreateFolder
-  );
-
-
-  /* Account */
-
-  elements.accountBtn?.addEventListener(
-    "click",
-    toggleAccountMenu
-  );
-
-  elements.accountSignInBtn?.addEventListener(
-    "click",
-    () => {
-
-      closeAccountMenu();
-
-      openAuthModal("signin");
-
-    }
-  );
-
-  elements.accountSignOutBtn?.addEventListener(
-    "click",
-    handleSignOut
-  );
-
-
-  /* Auth */
-
-  elements.closeAuthModal?.addEventListener(
-    "click",
-    closeAuthModal
-  );
-
-  elements.authForm?.addEventListener(
-    "submit",
-    handleAuthSubmit
-  );
-
-  elements.authSwitchBtn?.addEventListener(
-    "click",
-    toggleAuthMode
-  );
-
-
-  /* Save / run */
-
-  elements.saveBtn?.addEventListener(
-    "click",
-    () => {
-
-      saveCurrentEditor();
-
-      saveProjectLocal();
-
-      showToast(
-        "Project saved.",
-        "success"
-      );
-
-    }
-  );
-
-
-  elements.runBtn?.addEventListener(
-    "click",
-    () => {
-
-      saveCurrentEditor();
-
-      updatePreview();
-
-      showPreview();
-
-    }
-  );
-
-
-  elements.refreshPreviewBtn?.addEventListener(
-    "click",
-    () => {
-
-      saveCurrentEditor();
-
-      updatePreview();
-
-    }
-  );
-
-
-  /* Desktop views */
-
-  elements.desktopEditorTab?.addEventListener(
-    "click",
-    showEditor
-  );
-
-  elements.desktopPreviewTab?.addEventListener(
-    "click",
-    showPreview
-  );
-
-
-  /* Mobile views */
-
-  elements.mobileEditorBtn?.addEventListener(
-    "click",
-    showEditor
-  );
-
-  elements.mobilePreviewBtn?.addEventListener(
-    "click",
-    showPreview
-  );
-
-  elements.mobileRunBtn?.addEventListener(
-    "click",
-    () => {
-
-      saveCurrentEditor();
-
-      updatePreview();
-
-      showPreview();
-
-    }
-  );
-
-
-  /* Publish */
-
-  elements.publishBtn?.addEventListener(
-    "click",
-    handlePublish
-  );
-
-
-  /* Close menus/modals with Escape */
-
-  document.addEventListener(
-    "keydown",
-    event => {
-
-      if (event.key !== "Escape") {
-        return;
-      }
-
-      closeSidebar();
-      closeAccountMenu();
-
-      closeFileModal();
-      closeFolderModal();
-      closeProjectModal();
-      closeDashboardModal();
-      closeAuthModal();
-
-    }
-  );
-
-
-  /* Close account menu if clicking outside */
-
-  document.addEventListener(
-    "click",
-    event => {
-
-      if (
-        elements.accountMenu?.classList.contains(
-          "hidden"
-        )
-      ) {
-        return;
-      }
-
-      const clickedAccount =
-        elements.accountBtn?.contains(
-          event.target
-        );
-
-      const clickedMenu =
-        elements.accountMenu?.contains(
-          event.target
-        );
-
-      if (
-        !clickedAccount &&
-        !clickedMenu
-      ) {
-        closeAccountMenu();
-      }
-
-    }
-  );
-
-}
-
-
-/* =========================================================
-   CODEMIRROR INITIALIZATION
-   ========================================================= */
-
-function initializeEditor() {
-
-  if (!elements.codeEditor) {
-    return;
-  }
-
-
-  const activeFile =
-    getCurrentFile();
-
-
-  const startContent =
-    activeFile?.content || "";
-
-
-  const state =
-    EditorState.create({
-
-      doc: startContent,
-
-      extensions: [
-
-        basicSetup,
-
-        history(),
-
-        keymap.of([
-          ...defaultKeymap,
-          ...historyKeymap
-        ]),
-
-        oneDark,
-
-        EditorView.lineWrapping,
-
-        EditorView.updateListener.of(
-          update => {
-
-            if (
-              !update.docChanged
-            ) {
-              return;
-            }
-
-            handleEditorChanged();
-
-          }
-        ),
-
-        EditorView.theme({
-
-          "&": {
-            height: "100%"
-          },
-
-          ".cm-content": {
-            caretColor:
-              "#c4b5fd"
-          },
-
-          ".cm-cursor": {
-            borderLeftColor:
-              "#c4b5fd"
-          }
-
-        })
-
-      ]
-
-    });
-
-
-  editorView =
-    new EditorView({
-
-      state,
-
-      parent:
-        elements.codeEditor
-
-    });
-
-}
-
-
-/* =========================================================
-   CHANGE CODEMIRROR LANGUAGE
-   ========================================================= */
-
-function getLanguageExtension(
-  file
-) {
-
-  if (!file) {
-    return [];
-  }
-
-  const language =
-    file.language ||
-    detectLanguage(
-      file.name
-    );
-
-
-  if (language === "html") {
-    return [html()];
-  }
-
-  if (language === "css") {
-    return [css()];
-  }
-
-  if (
-    language === "javascript"
-  ) {
-    return [
-      javascript({
-        jsx: true
-      })
-    ];
-  }
-
-  return [];
-
-}
-
-
-/* =========================================================
-   DETECT LANGUAGE
-   ========================================================= */
-
-function detectLanguage(
-  filename
-) {
-
-  const extension =
-    filename
-      .split(".")
-      .pop()
-      .toLowerCase();
-
-
-  if (
-    extension === "html" ||
-    extension === "htm"
-  ) {
-    return "html";
-  }
-
-
-  if (
-    extension === "css"
-  ) {
-    return "css";
-  }
-
-
-  if (
-    extension === "js" ||
-    extension === "mjs" ||
-    extension === "jsx"
-  ) {
-    return "javascript";
-  }
-
-
-  if (
-    extension === "json"
-  ) {
-    return "javascript";
-  }
-
-
-  return "text";
-
-}
-
-
-/* =========================================================
-   OPEN FILE
-   ========================================================= */
-
-function openFile(
-  fileId
-) {
-
-  saveCurrentEditor();
-
-
-  const file =
-    projectState.files.find(
-      item =>
-        item.id === fileId
-    );
-
-
-  if (!file) {
-    return;
-  }
-
-
-  currentFileId =
-    file.id;
-
-  projectState.activeFileId =
-    file.id;
-
-
-  if (!editorView) {
-    return;
-  }
-
-
-  const languageExtensions =
-    getLanguageExtension(
-      file
-    );
-
-
-  const currentState =
-    editorView.state;
-
-
-  const newState =
-    EditorState.create({
-
-      doc:
-        file.content || "",
-
-      selection: {
-        anchor: 0
-      },
-
-      extensions: [
-
-        basicSetup,
-
-        history(),
-
-        keymap.of([
-          ...defaultKeymap,
-          ...historyKeymap
-        ]),
-
-        oneDark,
-
-        EditorView.lineWrapping,
-
-        ...languageExtensions,
-
-        EditorView.updateListener.of(
-          update => {
-
-            if (
-              update.docChanged
-            ) {
-              handleEditorChanged();
-            }
-
-          }
-        ),
-
-        EditorView.theme({
-
-          "&": {
-            height: "100%"
-          },
-
-          ".cm-content": {
-            caretColor:
-              "#c4b5fd"
-          },
-
-          ".cm-cursor": {
-            borderLeftColor:
-              "#c4b5fd"
-          }
-
-        })
-
-      ]
-
-    });
-
-
-  editorView.setState(
-    newState
-  );
-
-
-  renderEverything();
-
-  updatePreview();
-
-  closeSidebar();
 
 }
 
@@ -1243,936 +677,203 @@ function getCurrentFile() {
 
 
 /* =========================================================
-   SAVE CURRENT EDITOR CONTENT
+   LANGUAGE
    ========================================================= */
 
-function saveCurrentEditor() {
+function detectLanguage(
+  filename
+) {
+
+  const ext =
+    filename
+      .split(".")
+      .pop()
+      .toLowerCase();
+
 
   if (
-    !editorView ||
-    !currentFileId
+    ext === "html" ||
+    ext === "htm"
   ) {
+    return "html";
+  }
+
+
+  if (
+    ext === "css"
+  ) {
+    return "css";
+  }
+
+
+  if (
+    ext === "js" ||
+    ext === "mjs" ||
+    ext === "jsx"
+  ) {
+    return "javascript";
+  }
+
+
+  return "text";
+
+}
+
+
+/* =========================================================
+   CODEMIRROR LANGUAGE
+   ========================================================= */
+
+function getLanguage(
+  file
+) {
+
+  if (!file) {
+    return [];
+  }
+
+
+  const language =
+    file.language ||
+    detectLanguage(
+      file.name
+    );
+
+
+  if (
+    language === "html"
+  ) {
+    return [
+      html()
+    ];
+  }
+
+
+  if (
+    language === "css"
+  ) {
+    return [
+      css()
+    ];
+  }
+
+
+  if (
+    language === "javascript"
+  ) {
+    return [
+      javascript({
+        jsx: true
+      })
+    ];
+  }
+
+
+  return [];
+
+}
+
+
+/* =========================================================
+   CREATE EDITOR
+   ========================================================= */
+
+function createEditor() {
+
+  if (
+    !el.codeEditor
+  ) {
+
+    console.error(
+      "codeEditor element was not found."
+    );
+
     return;
+
   }
 
 
   const file =
-    projectState.files.find(
-      item =>
-        item.id === currentFileId
-    );
+    getCurrentFile();
 
 
-  if (!file) {
-    return;
-  }
+  editorView =
+    new EditorView({
 
+      state:
+        EditorState.create({
 
-  file.content =
-    editorView.state.doc.toString();
+          doc:
+            file?.content ||
+            "",
 
-  file.updatedAt =
-    new Date().toISOString();
+          extensions: [
 
+            basicSetup,
 
-  projectState.updatedAt =
-    new Date().toISOString();
+            history(),
 
+            keymap.of([
+              ...defaultKeymap,
+              ...historyKeymap
+            ]),
 
-  setSaveStatus(
-    "Unsaved changes"
-  );
+            oneDark,
 
-}
+            ...getLanguage(
+              file
+            ),
 
+            EditorView.lineWrapping,
 
-/* =========================================================
-   EDITOR CHANGED
-   ========================================================= */
+            EditorView.theme({
 
-function handleEditorChanged() {
+              "&": {
+                height:
+                  "100%"
+              },
 
-  saveCurrentEditor();
+              ".cm-scroller": {
+                overflow:
+                  "auto"
+              },
 
+              ".cm-content": {
+                fontSize:
+                  "16px",
+                fontFamily:
+                  "ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace",
+                padding:
+                  "16px 0"
+              },
 
-  setSaveStatus(
-    "Saving..."
-  );
+              ".cm-gutters": {
+                fontSize:
+                  "14px"
+              }
 
+            }),
 
-  clearTimeout(
-    autosaveTimer
-  );
+            EditorView.updateListener.of(
+              update => {
 
+                if (
+                  update.docChanged
+                ) {
 
-  autosaveTimer =
-    setTimeout(
-      () => {
+                  saveEditorContent();
 
-        saveProjectLocal();
+                }
 
-        /*
-          Cloud autosave will be connected
-          to the Cloudflare Worker later.
-        */
+              }
+            )
 
-      },
-      700
-    );
+          ]
 
-}
+        }),
 
-
-/* =========================================================
-   SAVE STATUS
-   ========================================================= */
-
-function setSaveStatus(
-  status
-) {
-
-  if (
-    elements.saveStatus
-  ) {
-    elements.saveStatus.textContent =
-      status;
-  }
-
-}
-
-
-/* =========================================================
-   RENDER EVERYTHING
-   ========================================================= */
-
-function renderEverything() {
-
-  renderProjectNames();
-
-  renderFileTree();
-
-  renderTabs();
-
-  renderCurrentFileLabel();
-
-}
-
-
-/* =========================================================
-   PROJECT NAME
-   ========================================================= */
-
-function renderProjectNames() {
-
-  const name =
-    projectState.name ||
-    "My Website";
-
-
-  if (
-    elements.topProjectName
-  ) {
-    elements.topProjectName.textContent =
-      name;
-  }
-
-
-  if (
-    elements.sidebarProjectName
-  ) {
-    elements.sidebarProjectName.textContent =
-      name;
-  }
-
-
-  if (
-    elements.sidebarProjectStatus
-  ) {
-
-    elements.sidebarProjectStatus.textContent =
-      currentUser
-        ? "Cloud account connected"
-        : "Local project";
-
-  }
-
-}
-
-
-/* =========================================================
-   FILE TREE
-   ========================================================= */
-
-function renderFileTree() {
-
-  if (!elements.fileTree) {
-    return;
-  }
-
-
-  elements.fileTree.innerHTML = "";
-
-
-  const rootFiles =
-    projectState.files.filter(
-      file =>
-        !file.parent
-    );
-
-
-  const rootFolders =
-    projectState.folders.filter(
-      folder =>
-        !folder.parent
-    );
-
-
-  /*
-    Folders first.
-  */
-
-  rootFolders.forEach(
-    folder => {
-
-      elements.fileTree.appendChild(
-        createFolderElement(
-          folder,
-          0
-        )
-      );
-
-    }
-  );
-
-
-  /*
-    Files.
-  */
-
-  rootFiles.forEach(
-    file => {
-
-      elements.fileTree.appendChild(
-        createFileElement(
-          file,
-          0
-        )
-      );
-
-    }
-  );
-
-
-  if (
-    !rootFiles.length &&
-    !rootFolders.length
-  ) {
-
-    const empty =
-      document.createElement(
-        "div"
-      );
-
-    empty.className =
-      "px-3 py-8 text-center text-xs text-gray-600";
-
-    empty.textContent =
-      "No files yet.";
-
-    elements.fileTree.appendChild(
-      empty
-    );
-
-  }
-
-}
-
-
-/* =========================================================
-   FILE ELEMENT
-   ========================================================= */
-
-function createFileElement(
-  file,
-  depth
-) {
-
-  const wrapper =
-    document.createElement(
-      "div"
-    );
-
-
-  const row =
-    document.createElement(
-      "div"
-    );
-
-
-  row.className =
-    "file-tree-item";
-
-
-  if (
-    file.id === currentFileId
-  ) {
-    row.classList.add(
-      "active"
-    );
-  }
-
-
-  row.style.paddingLeft =
-    `${8 + depth * 16}px`;
-
-
-  const icon =
-    document.createElement(
-      "span"
-    );
-
-
-  icon.className =
-    getFileIconClass(
-      file
-    );
-
-
-  icon.innerHTML =
-    getFileIcon(
-      file
-    );
-
-
-  const name =
-    document.createElement(
-      "span"
-    );
-
-
-  name.className =
-    "truncate flex-1";
-
-
-  name.textContent =
-    file.name;
-
-
-  const actions =
-    document.createElement(
-      "div"
-    );
-
-
-  actions.className =
-    "file-actions flex items-center";
-
-
-  const deleteButton =
-    document.createElement(
-      "button"
-    );
-
-
-  deleteButton.type =
-    "button";
-
-
-  deleteButton.className =
-    "w-6 h-6 rounded-md flex items-center justify-center hover:bg-red-500/10 hover:text-red-400 text-gray-600";
-
-
-  deleteButton.title =
-    "Delete file";
-
-
-  deleteButton.innerHTML =
-    `
-      <svg
-        viewBox="0 0 24 24"
-        fill="none"
-        stroke="currentColor"
-        stroke-width="1.8"
-        class="w-3.5 h-3.5"
-      >
-        <path d="M3 6h18"/>
-        <path d="M8 6V4h8v2"/>
-        <path d="M19 6l-1 14H6L5 6"/>
-        <path d="M10 11v5M14 11v5"/>
-      </svg>
-    `;
-
-
-  deleteButton.addEventListener(
-    "click",
-    event => {
-
-      event.stopPropagation();
-
-      deleteFile(
-        file.id
-      );
-
-    }
-  );
-
-
-  actions.appendChild(
-    deleteButton
-  );
-
-
-  row.appendChild(icon);
-  row.appendChild(name);
-  row.appendChild(actions);
-
-
-  row.addEventListener(
-    "click",
-    () => {
-
-      openFile(
-        file.id
-      );
-
-    }
-  );
-
-
-  wrapper.appendChild(row);
-
-
-  return wrapper;
-
-}
-
-
-/* =========================================================
-   FOLDER ELEMENT
-   ========================================================= */
-
-function createFolderElement(
-  folder,
-  depth
-) {
-
-  const wrapper =
-    document.createElement(
-      "div"
-    );
-
-
-  const row =
-    document.createElement(
-      "div"
-    );
-
-
-  row.className =
-    "file-tree-item file-tree-folder";
-
-
-  row.style.paddingLeft =
-    `${8 + depth * 16}px`;
-
-
-  const arrow =
-    document.createElement(
-      "span"
-    );
-
-
-  arrow.className =
-    "folder-arrow";
-
-
-  arrow.innerHTML =
-    `
-      <svg
-        viewBox="0 0 24 24"
-        fill="none"
-        stroke="currentColor"
-        stroke-width="1.8"
-        class="w-3.5 h-3.5"
-      >
-        <path d="m9 18 6-6-6-6"/>
-      </svg>
-    `;
-
-
-  const icon =
-    document.createElement(
-      "span"
-    );
-
-
-  icon.innerHTML =
-    `
-      <svg
-        viewBox="0 0 24 24"
-        fill="none"
-        stroke="currentColor"
-        stroke-width="1.8"
-        class="w-4 h-4"
-      >
-        <path d="M3 6a2 2 0 0 1 2-2h5l2 2h7a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>
-      </svg>
-    `;
-
-
-  const name =
-    document.createElement(
-      "span"
-    );
-
-
-  name.className =
-    "truncate flex-1";
-
-
-  name.textContent =
-    folder.name;
-
-
-  const actions =
-    document.createElement(
-      "div"
-    );
-
-
-  actions.className =
-    "file-actions flex items-center";
-
-
-  const deleteButton =
-    document.createElement(
-      "button"
-    );
-
-
-  deleteButton.type =
-    "button";
-
-
-  deleteButton.className =
-    "w-6 h-6 rounded-md flex items-center justify-center hover:bg-red-500/10 hover:text-red-400 text-gray-600";
-
-
-  deleteButton.title =
-    "Delete folder";
-
-
-  deleteButton.innerHTML =
-    `
-      <svg
-        viewBox="0 0 24 24"
-        fill="none"
-        stroke="currentColor"
-        stroke-width="1.8"
-        class="w-3.5 h-3.5"
-      >
-        <path d="M3 6h18"/>
-        <path d="M8 6V4h8v2"/>
-        <path d="M19 6l-1 14H6L5 6"/>
-      </svg>
-    `;
-
-
-  deleteButton.addEventListener(
-    "click",
-    event => {
-
-      event.stopPropagation();
-
-      deleteFolder(
-        folder.id
-      );
-
-    }
-  );
-
-
-  actions.appendChild(
-    deleteButton
-  );
-
-
-  row.appendChild(
-    arrow
-  );
-
-  row.appendChild(
-    icon
-  );
-
-  row.appendChild(
-    name
-  );
-
-  row.appendChild(
-    actions
-  );
-
-
-  const children =
-    document.createElement(
-      "div"
-    );
-
-
-  children.className =
-    "file-tree-children hidden";
-
-
-  const childFiles =
-    projectState.files.filter(
-      file =>
-        file.parent === folder.id
-    );
-
-
-  const childFolders =
-    projectState.folders.filter(
-      item =>
-        item.parent === folder.id
-    );
-
-
-  childFolders.forEach(
-    childFolder => {
-
-      children.appendChild(
-        createFolderElement(
-          childFolder,
-          depth + 1
-        )
-      );
-
-    }
-  );
-
-
-  childFiles.forEach(
-    file => {
-
-      children.appendChild(
-        createFileElement(
-          file,
-          depth + 1
-        )
-      );
-
-    }
-  );
-
-
-  row.addEventListener(
-    "click",
-    event => {
-
-      event.stopPropagation();
-
-      const isClosed =
-        children.classList.contains(
-          "hidden"
-        );
-
-
-      children.classList.toggle(
-        "hidden"
-      );
-
-
-      row.classList.toggle(
-        "open",
-        isClosed
-      );
-
-    }
-  );
-
-
-  wrapper.appendChild(
-    row
-  );
-
-  wrapper.appendChild(
-    children
-  );
-
-
-  return wrapper;
-
-}
-
-
-/* =========================================================
-   FILE ICON
-   ========================================================= */
-
-function getFileIcon(
-  file
-) {
-
-  const language =
-    file.language ||
-    detectLanguage(
-      file.name
-    );
-
-
-  if (
-    language === "html"
-  ) {
-
-    return `
-      <svg
-        viewBox="0 0 24 24"
-        fill="none"
-        stroke="currentColor"
-        stroke-width="1.8"
-        class="w-4 h-4"
-      >
-        <path d="m8 9-4 3 4 3"/>
-        <path d="m16 9 4 3-4 3"/>
-        <path d="m14 5-4 14"/>
-      </svg>
-    `;
-
-  }
-
-
-  if (
-    language === "css"
-  ) {
-
-    return `
-      <svg
-        viewBox="0 0 24 24"
-        fill="none"
-        stroke="currentColor"
-        stroke-width="1.8"
-        class="w-4 h-4"
-      >
-        <path d="m8 9-4 3 4 3"/>
-        <path d="m16 9 4 3-4 3"/>
-        <path d="m14 5-4 14"/>
-      </svg>
-    `;
-
-  }
-
-
-  if (
-    language === "javascript"
-  ) {
-
-    return `
-      <svg
-        viewBox="0 0 24 24"
-        fill="none"
-        stroke="currentColor"
-        stroke-width="1.8"
-        class="w-4 h-4"
-      >
-        <path d="M4 4h16v16H4z"/>
-        <path d="M9 17c1.5 1 3 .4 3-1V9"/>
-        <path d="M15 13v4"/>
-      </svg>
-    `;
-
-  }
-
-
-  return `
-    <svg
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      stroke-width="1.8"
-      class="w-4 h-4"
-    >
-      <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
-      <path d="M14 2v6h6"/>
-    </svg>
-  `;
-
-}
-
-
-function getFileIconClass(
-  file
-) {
-
-  const language =
-    file.language ||
-    detectLanguage(
-      file.name
-    );
-
-
-  if (
-    language === "html"
-  ) {
-    return "text-orange-400";
-  }
-
-  if (
-    language === "css"
-  ) {
-    return "text-blue-400";
-  }
-
-  if (
-    language === "javascript"
-  ) {
-    return "text-yellow-400";
-  }
-
-  return "text-gray-500";
-
-}
-
-
-/* =========================================================
-   TABS
-   ========================================================= */
-
-function renderTabs() {
-
-  if (!elements.tabsContainer) {
-    return;
-  }
-
-
-  elements.tabsContainer.innerHTML =
-    "";
-
-
-  const openFiles =
-    getOpenFiles();
-
-
-  openFiles.forEach(
-    file => {
-
-      const tab =
-        document.createElement(
-          "button"
-        );
-
-
-      tab.type =
-        "button";
-
-
-      tab.className =
-        "editor-tab";
-
-
-      if (
-        file.id === currentFileId
-      ) {
-        tab.classList.add(
-          "active"
-        );
-      }
-
-
-      const icon =
-        document.createElement(
-          "span"
-        );
-
-
-      icon.className =
-        getFileIconClass(
-          file
-        );
-
-
-      icon.innerHTML =
-        getFileIcon(
-          file
-        );
-
-
-      const name =
-        document.createElement(
-          "span"
-        );
-
-
-      name.textContent =
-        file.name;
-
-
-      const close =
-        document.createElement(
-          "span"
-        );
-
-
-      close.className =
-        "editor-tab-close";
-
-
-      close.innerHTML =
-        `
-          <svg
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            stroke-width="1.8"
-            class="w-3.5 h-3.5"
-          >
-            <path d="m6 6 12 12M18 6 6 18"/>
-          </svg>
-        `;
-
-
-      close.addEventListener(
-        "click",
-        event => {
-
-          event.stopPropagation();
-
-          closeTab(
-            file.id
-          );
-
-        }
-      );
-
-
-      tab.appendChild(
-        icon
-      );
-
-      tab.appendChild(
-        name
-      );
-
-      tab.appendChild(
-        close
-      );
-
-
-      tab.addEventListener(
-        "click",
-        () => {
-
-          openFile(
-            file.id
-          );
-
-        }
-      );
-
-
-      elements.tabsContainer.appendChild(
-        tab
-      );
+      parent:
+        el.codeEditor
 
     });
 
@@ -2180,310 +881,10 @@ function renderTabs() {
 
 
 /* =========================================================
-   OPEN FILES
+   OPEN FILE
    ========================================================= */
 
-function getOpenFiles() {
-
-  /*
-    V2 keeps the currently active file and
-    recently used files available.
-
-    Later this can be replaced by a dedicated
-    open-tabs array.
-  */
-
-  const files =
-    projectState.files;
-
-
-  if (!files.length) {
-    return [];
-  }
-
-
-  return files;
-
-}
-
-
-/* =========================================================
-   CLOSE TAB
-   ========================================================= */
-
-function closeTab(
-  fileId
-) {
-
-  const files =
-    projectState.files;
-
-
-  if (
-    files.length <= 1
-  ) {
-
-    showToast(
-      "Keep at least one file open.",
-      "info"
-    );
-
-    return;
-
-  }
-
-
-  if (
-    fileId === currentFileId
-  ) {
-
-    const index =
-      files.findIndex(
-        file =>
-          file.id === fileId
-      );
-
-
-    const nextFile =
-      files[index + 1] ||
-      files[index - 1];
-
-
-    if (nextFile) {
-      openFile(
-        nextFile.id
-      );
-    }
-
-  }
-
-
-  renderTabs();
-
-}
-
-
-/* =========================================================
-   CURRENT FILE LABEL
-   ========================================================= */
-
-function renderCurrentFileLabel() {
-
-  const file =
-    getCurrentFile();
-
-
-  if (!file) {
-
-    if (
-      elements.currentFileName
-    ) {
-      elements.currentFileName.textContent =
-        "No file";
-    }
-
-    return;
-
-  }
-
-
-  elements.currentFileName.textContent =
-    file.name;
-
-
-  if (
-    elements.currentFileIcon
-  ) {
-
-    elements.currentFileIcon.className =
-      getFileIconClass(
-        file
-      );
-
-    elements.currentFileIcon.innerHTML =
-      getFileIcon(
-        file
-      );
-
-  }
-
-}
-
-
-/* =========================================================
-   CREATE FILE
-   ========================================================= */
-
-function handleCreateFile(
-  event
-) {
-
-  event.preventDefault();
-
-
-  const rawName =
-    elements.fileNameInput
-      .value
-      .trim();
-
-
-  if (!rawName) {
-    return;
-  }
-
-
-  const name =
-    sanitizePath(
-      rawName
-    );
-
-
-  if (!name) {
-    showToast(
-      "Enter a valid file name.",
-      "error"
-    );
-
-    return;
-  }
-
-
-  const existing =
-    projectState.files.some(
-      file =>
-        file.name === name &&
-        file.parent === null
-    );
-
-
-  if (existing) {
-
-    showToast(
-      "A file with that name already exists.",
-      "error"
-    );
-
-    return;
-
-  }
-
-
-  const file = {
-
-    id: createId(),
-
-    name,
-
-    type: "file",
-
-    language:
-      detectLanguage(
-        name
-      ),
-
-    parent: null,
-
-    content:
-      getStarterContent(
-        name
-      ),
-
-    createdAt:
-      new Date().toISOString(),
-
-    updatedAt:
-      new Date().toISOString()
-
-  };
-
-
-  projectState.files.push(
-    file
-  );
-
-
-  saveProjectLocal();
-
-  closeFileModal();
-
-  openFile(
-    file.id
-  );
-
-
-  showToast(
-    `${name} created.`,
-    "success"
-  );
-
-}
-
-
-/* =========================================================
-   STARTER CONTENT
-   ========================================================= */
-
-function getStarterContent(
-  filename
-) {
-
-  const language =
-    detectLanguage(
-      filename
-    );
-
-
-  if (
-    language === "html"
-  ) {
-
-    return `<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>${filename}</title>
-</head>
-<body>
-
-</body>
-</html>`;
-
-  }
-
-
-  if (
-    language === "css"
-  ) {
-
-    return `/* ${filename} */
-
-`;
-
-  }
-
-
-  if (
-    language === "javascript"
-  ) {
-
-    return `// ${filename}
-
-`;
-
-  }
-
-
-  return "";
-
-}
-
-
-/* =========================================================
-   DELETE FILE
-   ========================================================= */
-
-function deleteFile(
+function openFile(
   fileId
 ) {
 
@@ -2499,315 +900,712 @@ function deleteFile(
   }
 
 
-  /*
-    Don't use browser confirm dialogs.
-    Use our own confirmation flow.
-  */
+  saveEditorContent();
 
-  const shouldDelete =
-    window.confirm(
-      `Delete ${file.name}?`
+
+  currentFileId =
+    file.id;
+
+
+  projectState.activeFileId =
+    file.id;
+
+
+  if (!editorView) {
+
+    createEditor();
+
+  } else {
+
+    editorView.setState(
+
+      EditorState.create({
+
+        doc:
+          file.content ||
+          "",
+
+        extensions: [
+
+          basicSetup,
+
+          history(),
+
+          keymap.of([
+            ...defaultKeymap,
+            ...historyKeymap
+          ]),
+
+          oneDark,
+
+          ...getLanguage(
+            file
+          ),
+
+          EditorView.lineWrapping,
+
+          EditorView.theme({
+
+            "&": {
+              height:
+                "100%"
+            },
+
+            ".cm-content": {
+              fontSize:
+                "16px",
+              fontFamily:
+                "ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace",
+              padding:
+                "16px 0"
+            },
+
+            ".cm-gutters": {
+              fontSize:
+                "14px"
+            }
+
+          }),
+
+          EditorView.updateListener.of(
+            update => {
+
+              if (
+                update.docChanged
+              ) {
+
+                saveEditorContent();
+
+              }
+
+            }
+          )
+
+        ]
+
+      })
+
     );
-
-
-  if (!shouldDelete) {
-    return;
-  }
-
-
-  projectState.files =
-    projectState.files.filter(
-      item =>
-        item.id !== fileId
-    );
-
-
-  if (
-    currentFileId === fileId
-  ) {
-
-    const nextFile =
-      projectState.files[0];
-
-
-    currentFileId =
-      nextFile?.id || null;
-
-
-    projectState.activeFileId =
-      currentFileId;
-
-
-    if (nextFile) {
-      openFile(
-        nextFile.id
-      );
-    } else if (
-      editorView
-    ) {
-
-      editorView.dispatch({
-        changes: {
-          from: 0,
-          to:
-            editorView.state.doc.length,
-          insert: ""
-        }
-      });
-
-    }
-
-  }
-
-
-  saveProjectLocal();
-
-  renderEverything();
-
-  updatePreview();
-
-
-  showToast(
-    `${file.name} deleted.`,
-    "success"
-  );
-
-}
-
-
-/* =========================================================
-   CREATE FOLDER
-   ========================================================= */
-
-function handleCreateFolder(
-  event
-) {
-
-  event.preventDefault();
-
-
-  const name =
-    elements.folderNameInput
-      .value
-      .trim();
-
-
-  if (!name) {
-    return;
-  }
-
-
-  const existing =
-    projectState.folders.some(
-      folder =>
-        folder.name === name &&
-        folder.parent === null
-    );
-
-
-  if (existing) {
-
-    showToast(
-      "A folder with that name already exists.",
-      "error"
-    );
-
-    return;
 
   }
 
 
-  const folder = {
-
-    id: createId(),
-
-    name,
-
-    type: "folder",
-
-    parent: null,
-
-    createdAt:
-      new Date().toISOString()
-
-  };
-
-
-  projectState.folders.push(
-    folder
-  );
-
-
-  saveProjectLocal();
-
-  closeFolderModal();
+  renderTabs();
 
   renderFileTree();
 
+  renderCurrentFile();
 
-  showToast(
-    `${name} folder created.`,
-    "success"
+
+  /*
+    IMPORTANT:
+    On mobile, selecting a file
+    automatically switches back
+    to the CODE view.
+  */
+
+  showEditor();
+
+
+  setTimeout(
+    () => {
+
+      editorView?.requestMeasure();
+
+    },
+    50
   );
 
 }
 
 
 /* =========================================================
-   DELETE FOLDER
+   SAVE EDITOR CONTENT
    ========================================================= */
 
-function deleteFolder(
-  folderId
+function saveEditorContent() {
+
+  if (
+    !editorView ||
+    !currentFileId
+  ) {
+    return;
+  }
+
+
+  const file =
+    getCurrentFile();
+
+
+  if (!file) {
+    return;
+  }
+
+
+  file.content =
+    editorView.state.doc.toString();
+
+
+  projectState.updatedAt =
+    new Date().toISOString();
+
+
+  if (
+    el.saveStatus
+  ) {
+
+    el.saveStatus.textContent =
+      "Saving...";
+
+  }
+
+
+  clearTimeout(
+    saveTimer
+  );
+
+
+  saveTimer =
+    setTimeout(
+      () => {
+
+        saveProject();
+
+      },
+      500
+    );
+
+}
+
+
+/* =========================================================
+   RENDER CURRENT FILE
+   ========================================================= */
+
+function renderCurrentFile() {
+
+  const file =
+    getCurrentFile();
+
+
+  if (
+    el.currentFileName
+  ) {
+
+    el.currentFileName.textContent =
+      file?.name ||
+      "No file";
+
+  }
+
+
+  if (
+    el.currentFileIcon &&
+    file
+  ) {
+
+    el.currentFileIcon.innerHTML =
+      fileIcon(
+        file
+      );
+
+  }
+
+}
+
+
+/* =========================================================
+   FILE ICON
+   ========================================================= */
+
+function fileIcon(
+  file
 ) {
 
-  const folder =
-    projectState.folders.find(
-      item =>
-        item.id === folderId
-    );
-
-
-  if (!folder) {
-    return;
-  }
-
-
-  const shouldDelete =
-    window.confirm(
-      `Delete folder "${folder.name}" and its contents?`
-    );
-
-
-  if (!shouldDelete) {
-    return;
-  }
-
-
-  const descendantFolderIds =
-    getDescendantFolderIds(
-      folderId
-    );
-
-
-  const allFolderIds =
-    [
-      folderId,
-      ...descendantFolderIds
-    ];
-
-
-  projectState.folders =
-    projectState.folders.filter(
-      item =>
-        !allFolderIds.includes(
-          item.id
-        )
-    );
-
-
-  projectState.files =
-    projectState.files.filter(
-      file =>
-        !allFolderIds.includes(
-          file.parent
-        )
+  const language =
+    file.language ||
+    detectLanguage(
+      file.name
     );
 
 
   if (
-    currentFileId &&
-    !projectState.files.some(
-      file =>
-        file.id === currentFileId
-    )
+    language === "html"
   ) {
 
-    const firstFile =
-      projectState.files[0];
-
-
-    currentFileId =
-      firstFile?.id || null;
-
-
-    if (firstFile) {
-      openFile(
-        firstFile.id
-      );
-    }
+    return `
+      <svg
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="1.8"
+        width="18"
+        height="18"
+      >
+        <path d="m8 9-4 3 4 3"/>
+        <path d="m16 9 4 3-4 3"/>
+        <path d="m14 5-4 14"/>
+      </svg>
+    `;
 
   }
 
 
-  saveProjectLocal();
+  if (
+    language === "css"
+  ) {
 
-  renderEverything();
+    return `
+      <svg
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="1.8"
+        width="18"
+        height="18"
+      >
+        <path d="m8 9-4 3 4 3"/>
+        <path d="m16 9 4 3-4 3"/>
+        <path d="m14 5-4 14"/>
+      </svg>
+    `;
 
-  updatePreview();
+  }
 
 
-  showToast(
-    "Folder deleted.",
-    "success"
-  );
+  if (
+    language === "javascript"
+  ) {
+
+    return `
+      <svg
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="1.8"
+        width="18"
+        height="18"
+      >
+        <rect
+          x="4"
+          y="4"
+          width="16"
+          height="16"
+          rx="2"
+        />
+        <path d="M9 9v6"/>
+        <path d="M9 15c2 1 3 .5 3-1"/>
+        <path d="M15 9v6"/>
+      </svg>
+    `;
+
+  }
+
+
+  return `
+    <svg
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      stroke-width="1.8"
+      width="18"
+      height="18"
+    >
+      <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+      <path d="M14 2v6h6"/>
+    </svg>
+  `;
 
 }
 
 
 /* =========================================================
-   DESCENDANT FOLDERS
+   FILE TREE
    ========================================================= */
 
-function getDescendantFolderIds(
-  parentId
-) {
+function renderFileTree() {
 
-  const result = [];
+  if (
+    !el.fileTree
+  ) {
+    return;
+  }
 
 
-  const children =
-    projectState.folders.filter(
+  el.fileTree.innerHTML =
+    "";
+
+
+  projectState.folders
+    .filter(
       folder =>
-        folder.parent === parentId
+        folder.parent === null
+    )
+    .forEach(
+      folder => {
+
+        el.fileTree.appendChild(
+          createFolderNode(
+            folder
+          )
+        );
+
+      }
     );
 
 
-  children.forEach(
-    child => {
+  projectState.files
+    .filter(
+      file =>
+        file.parent === null
+    )
+    .forEach(
+      file => {
 
-      result.push(
-        child.id
-      );
+        el.fileTree.appendChild(
+          createFileNode(
+            file
+          )
+        );
 
-      result.push(
-        ...getDescendantFolderIds(
-          child.id
+      }
+    );
+
+}
+
+
+/* =========================================================
+   FILE NODE
+   ========================================================= */
+
+function createFileNode(
+  file
+) {
+
+  const row =
+    document.createElement(
+      "button"
+    );
+
+
+  row.type =
+    "button";
+
+
+  row.className =
+    "file-tree-item";
+
+
+  if (
+    file.id === currentFileId
+  ) {
+
+    row.classList.add(
+      "active"
+    );
+
+  }
+
+
+  row.innerHTML = `
+    <span class="file-icon">
+      ${fileIcon(file)}
+    </span>
+
+    <span class="file-name">
+      ${escapeHtml(file.name)}
+    </span>
+
+    <span class="file-delete"
+          title="Delete file">
+
+      <svg
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="1.8"
+        width="15"
+        height="15"
+      >
+        <path d="M3 6h18"/>
+        <path d="M8 6V4h8v2"/>
+        <path d="M19 6l-1 14H6L5 6"/>
+      </svg>
+
+    </span>
+  `;
+
+
+  row.addEventListener(
+    "click",
+    event => {
+
+      if (
+        event.target.closest(
+          ".file-delete"
         )
+      ) {
+
+        event.stopPropagation();
+
+        askDelete(
+          "file",
+          file.id,
+          file.name
+        );
+
+        return;
+
+      }
+
+
+      openFile(
+        file.id
       );
 
     }
   );
 
 
-  return result;
+  return row;
 
 }
 
 
 /* =========================================================
-   PATH SANITIZER
+   FOLDER NODE
    ========================================================= */
 
-function sanitizePath(
-  value
+function createFolderNode(
+  folder
 ) {
 
-  return value
-    .replace(/\\/g, "/")
-    .replace(/^\/+/, "")
-    .replace(/\.\./g, "")
-    .trim();
+  const container =
+    document.createElement(
+      "div"
+    );
+
+
+  const row =
+    document.createElement(
+      "button"
+    );
+
+
+  row.type =
+    "button";
+
+
+  row.className =
+    "file-tree-item";
+
+
+  row.innerHTML = `
+    <span class="folder-arrow">
+      <svg
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="1.8"
+        width="15"
+        height="15"
+      >
+        <path d="m9 18 6-6-6-6"/>
+      </svg>
+    </span>
+
+    <span>
+      <svg
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="1.8"
+        width="17"
+        height="17"
+      >
+        <path d="M3 6a2 2 0 0 1 2-2h5l2 2h7a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>
+      </svg>
+    </span>
+
+    <span class="file-name">
+      ${escapeHtml(folder.name)}
+    </span>
+
+    <span class="file-delete"
+          title="Delete folder">
+
+      <svg
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="1.8"
+        width="15"
+        height="15"
+      >
+        <path d="M3 6h18"/>
+        <path d="M8 6V4h8v2"/>
+        <path d="M19 6l-1 14H6L5 6"/>
+      </svg>
+
+    </span>
+  `;
+
+
+  const children =
+    document.createElement(
+      "div"
+    );
+
+
+  children.className =
+    "hidden";
+
+
+  projectState.files
+    .filter(
+      file =>
+        file.parent === folder.id
+    )
+    .forEach(
+      file => {
+
+        children.appendChild(
+          createFileNode(
+            file
+          )
+        );
+
+      }
+    );
+
+
+  row.addEventListener(
+    "click",
+    event => {
+
+      if (
+        event.target.closest(
+          ".file-delete"
+        )
+      ) {
+
+        event.stopPropagation();
+
+        askDelete(
+          "folder",
+          folder.id,
+          folder.name
+        );
+
+        return;
+
+      }
+
+
+      children.classList.toggle(
+        "hidden"
+      );
+
+
+      row.classList.toggle(
+        "folder-open"
+      );
+
+    }
+  );
+
+
+  container.appendChild(
+    row
+  );
+
+  container.appendChild(
+    children
+  );
+
+
+  return container;
+
+}
+
+
+/* =========================================================
+   TABS
+   ========================================================= */
+
+function renderTabs() {
+
+  if (
+    !el.tabsContainer
+  ) {
+    return;
+  }
+
+
+  el.tabsContainer.innerHTML =
+    "";
+
+
+  projectState.files
+    .forEach(
+      file => {
+
+        const tab =
+          document.createElement(
+            "button"
+          );
+
+
+        tab.type =
+          "button";
+
+
+        tab.className =
+          "editor-tab";
+
+
+        if (
+          file.id === currentFileId
+        ) {
+
+          tab.classList.add(
+            "active"
+          );
+
+        }
+
+
+        tab.innerHTML = `
+
+          <span>
+            ${fileIcon(file)}
+          </span>
+
+          <span>
+            ${escapeHtml(file.name)}
+          </span>
+
+        `;
+
+
+        tab.addEventListener(
+          "click",
+          () => {
+
+            openFile(
+              file.id
+            );
+
+          }
+        );
+
+
+        el.tabsContainer.appendChild(
+          tab
+        );
+
+      }
+    );
 
 }
 
@@ -2818,305 +1616,293 @@ function sanitizePath(
 
 function updatePreview() {
 
-  saveCurrentEditor();
+  if (
+    !el.previewFrame
+  ) {
+    return;
+  }
+
+
+  saveEditorContent();
 
 
   const htmlFile =
-    findFileByName(
-      "index.html"
+    projectState.files.find(
+      file =>
+        file.name
+          .toLowerCase() ===
+        "index.html"
     );
 
 
   if (!htmlFile) {
 
-    elements.previewFrame.srcdoc =
-      `
-      <!DOCTYPE html>
-      <html>
-      <body style="
-        margin:0;
-        min-height:100vh;
-        display:grid;
-        place-items:center;
-        font-family:Arial,sans-serif;
-        color:#555;
-      ">
-        <div>
-          <h2>No index.html</h2>
-          <p>Create an index.html file to preview your site.</p>
-        </div>
-      </body>
-      </html>
-      `;
+    el.previewFrame.srcdoc =
+`
+<!DOCTYPE html>
+<html>
+<body style="
+  margin:0;
+  min-height:100vh;
+  display:grid;
+  place-items:center;
+  font-family:Arial,sans-serif;
+  background:#fff;
+  color:#444;
+">
+
+  <div style="text-align:center">
+
+    <h2>
+      No index.html
+    </h2>
+
+    <p>
+      Create an index.html file.
+    </p>
+
+  </div>
+
+</body>
+</html>
+`;
 
     return;
 
   }
 
 
-  let documentHtml =
-    htmlFile.content || "";
-
-
-  const cssFiles =
-    projectState.files.filter(
-      file =>
-        detectLanguage(
-          file.name
-        ) === "css"
-    );
-
-
-  const jsFiles =
-    projectState.files.filter(
-      file =>
-        detectLanguage(
-          file.name
-        ) === "javascript"
-    );
+  let source =
+    htmlFile.content ||
+    "";
 
 
   const css =
-    cssFiles
+    projectState.files
+      .filter(
+        file =>
+          detectLanguage(
+            file.name
+          ) === "css"
+      )
       .map(
         file =>
-          file.content || ""
+          file.content
       )
       .join("\n");
 
 
   const js =
-    jsFiles
+    projectState.files
+      .filter(
+        file =>
+          detectLanguage(
+            file.name
+          ) === "javascript"
+      )
       .map(
         file =>
-          file.content || ""
+          file.content
       )
       .join("\n");
 
 
-  documentHtml =
-    injectStyles(
-      documentHtml,
-      css
-    );
+  if (
+    css.trim()
+  ) {
+
+    const style =
+`
+<style>
+${css}
+</style>
+`;
 
 
-  documentHtml =
-    injectScript(
-      documentHtml,
-      js
-    );
+    if (
+      source.includes(
+        "</head>"
+      )
+    ) {
 
+      source =
+        source.replace(
+          "</head>",
+          style +
+          "</head>"
+        );
 
-  /*
-    A CSP prevents the preview from
-    accidentally reaching the parent app.
-  */
+    } else {
 
-  const securityMeta =
-    `
-    <meta
-      http-equiv="Content-Security-Policy"
-      content="
-        default-src 'none';
-        style-src 'unsafe-inline';
-        script-src 'unsafe-inline';
-        img-src data: blob:;
-        font-src data:;
-      "
-    >
-    `;
+      source =
+        style +
+        source;
 
+    }
 
-  documentHtml =
-    documentHtml.replace(
-      /<head([^>]*)>/i,
-      `<head$1>${securityMeta}`
-    );
-
-
-  elements.previewFrame.srcdoc =
-    documentHtml;
-
-}
-
-
-/* =========================================================
-   INJECT CSS
-   ========================================================= */
-
-function injectStyles(
-  htmlContent,
-  cssContent
-) {
-
-  if (!cssContent.trim()) {
-    return htmlContent;
   }
-
-
-  const styleTag =
-    `
-    <style>
-      ${cssContent}
-    </style>
-    `;
 
 
   if (
-    /<\/head>/i.test(
-      htmlContent
-    )
+    js.trim()
   ) {
 
-    return htmlContent.replace(
-      /<\/head>/i,
-      `${styleTag}</head>`
-    );
+    const script =
+`
+<script>
+${js}
+<\/script>
+`;
+
+
+    if (
+      source.includes(
+        "</body>"
+      )
+    ) {
+
+      source =
+        source.replace(
+          "</body>",
+          script +
+          "</body>"
+        );
+
+    } else {
+
+      source +=
+        script;
+
+    }
 
   }
 
 
-  return `
-    <style>
-      ${cssContent}
-    </style>
-    ${htmlContent}
-  `;
+  el.previewFrame.srcdoc =
+    source;
 
 }
 
 
 /* =========================================================
-   INJECT JAVASCRIPT
-   ========================================================= */
-
-function injectScript(
-  htmlContent,
-  jsContent
-) {
-
-  if (!jsContent.trim()) {
-    return htmlContent;
-  }
-
-
-  const scriptTag =
-    `
-    <script>
-      ${jsContent}
-    <\/script>
-    `;
-
-
-  if (
-    /<\/body>/i.test(
-      htmlContent
-    )
-  ) {
-
-    return htmlContent.replace(
-      /<\/body>/i,
-      `${scriptTag}</body>`
-    );
-
-  }
-
-
-  return `
-    ${htmlContent}
-    ${scriptTag}
-  `;
-
-}
-
-
-/* =========================================================
-   FIND FILE
-   ========================================================= */
-
-function findFileByName(
-  name
-) {
-
-  return projectState.files.find(
-    file =>
-      file.name.toLowerCase() ===
-      name.toLowerCase()
-  );
-
-}
-
-
-/* =========================================================
-   EDITOR / PREVIEW SWITCHING
+   SHOW EDITOR
    ========================================================= */
 
 function showEditor() {
 
-  elements.workspace.classList.remove(
+  /*
+    Remove preview mode.
+  */
+
+  el.workspace?.classList.remove(
     "preview-mode"
   );
 
 
-  elements.desktopEditorTab?.classList.add(
-    "active"
-  );
-
-  elements.desktopPreviewTab?.classList.remove(
-    "active"
+  document.body.classList.remove(
+    "show-preview"
   );
 
 
-  elements.mobileEditorBtn?.classList.add(
-    "active"
-  );
+  /*
+    Make editor visible even if
+    the old CSS didn't catch the
+    mobile state.
+  */
 
-  elements.mobilePreviewBtn?.classList.remove(
-    "active"
-  );
-
-
-  if (editorView) {
-
-    setTimeout(
-      () => {
-        editorView.requestMeasure();
-      },
-      30
+  const editorPanel =
+    document.querySelector(
+      "#editorPanel"
     );
 
+
+  const previewPanel =
+    document.querySelector(
+      "#previewPanel"
+    );
+
+
+  if (editorPanel) {
+
+    editorPanel.style.display =
+      "";
+
   }
+
+
+  if (previewPanel) {
+
+    previewPanel.style.display =
+      "";
+
+  }
+
+
+  el.mobileEditorBtn?.classList.add(
+    "active"
+  );
+
+  el.mobilePreviewBtn?.classList.remove(
+    "active"
+  );
+
+
+  el.desktopEditorTab?.classList.add(
+    "active"
+  );
+
+  el.desktopPreviewTab?.classList.remove(
+    "active"
+  );
+
+
+  setTimeout(
+    () => {
+
+      editorView?.requestMeasure();
+
+    },
+    50
+  );
 
 }
 
 
+/* =========================================================
+   SHOW PREVIEW
+   ========================================================= */
+
 function showPreview() {
 
-  saveCurrentEditor();
+  saveEditorContent();
 
   updatePreview();
 
 
-  elements.workspace.classList.add(
+  el.workspace?.classList.add(
     "preview-mode"
   );
 
 
-  elements.desktopEditorTab?.classList.remove(
+  document.body.classList.add(
+    "show-preview"
+  );
+
+
+  el.mobileEditorBtn?.classList.remove(
     "active"
   );
 
-  elements.desktopPreviewTab?.classList.add(
+  el.mobilePreviewBtn?.classList.add(
     "active"
   );
 
 
-  elements.mobileEditorBtn?.classList.remove(
+  el.desktopEditorTab?.classList.remove(
     "active"
   );
 
-  elements.mobilePreviewBtn?.classList.add(
+  el.desktopPreviewTab?.classList.add(
     "active"
   );
 
@@ -3124,162 +1910,36 @@ function showPreview() {
 
 
 /* =========================================================
-   SIDEBAR
+   RUN
    ========================================================= */
 
-function toggleSidebar() {
+function runProject() {
 
-  elements.sidebar.classList.toggle(
-    "mobile-open"
-  );
+  saveEditorContent();
 
+  updatePreview();
 
-  const isOpen =
-    elements.sidebar.classList.contains(
-      "mobile-open"
-    );
+  showPreview();
 
 
-  elements.sidebarOverlay.classList.toggle(
-    "hidden",
-    !isOpen
-  );
-
-}
-
-
-function closeSidebar() {
-
-  elements.sidebar?.classList.remove(
-    "mobile-open"
-  );
-
-  elements.sidebarOverlay?.classList.add(
-    "hidden"
+  toast(
+    "Preview updated.",
+    "success"
   );
 
 }
 
 
 /* =========================================================
-   FILE MODAL
+   CREATE FILE
    ========================================================= */
 
-function openFileModal() {
-
-  elements.fileModal.classList.remove(
-    "hidden"
-  );
-
-
-  setTimeout(
-    () => {
-      elements.fileNameInput?.focus();
-    },
-    50
-  );
-
-}
-
-
-function closeFileModal() {
-
-  elements.fileModal.classList.add(
-    "hidden"
-  );
-
-
-  elements.fileForm?.reset();
-
-}
-
-
-/* =========================================================
-   FOLDER MODAL
-   ========================================================= */
-
-function openFolderModal() {
-
-  elements.folderModal.classList.remove(
-    "hidden"
-  );
-
-
-  setTimeout(
-    () => {
-      elements.folderNameInput?.focus();
-    },
-    50
-  );
-
-}
-
-
-function closeFolderModal() {
-
-  elements.folderModal.classList.add(
-    "hidden"
-  );
-
-
-  elements.folderForm?.reset();
-
-}
-
-
-/* =========================================================
-   PROJECT MODAL
-   ========================================================= */
-
-function openProjectModal() {
-
-  elements.projectModal.classList.remove(
-    "hidden"
-  );
-
-
-  setTimeout(
-    () => {
-      elements.projectNameInput?.focus();
-    },
-    50
-  );
-
-}
-
-
-function closeProjectModal() {
-
-  elements.projectModal.classList.add(
-    "hidden"
-  );
-
-
-  elements.projectForm?.reset();
-
-}
-
-
-/* =========================================================
-   CREATE PROJECT
-   ========================================================= */
-
-function handleCreateProject(
-  event
+function createFile(
+  name
 ) {
 
-  event.preventDefault();
-
-
-  const name =
-    elements.projectNameInput
-      .value
-      .trim();
-
-
-  const description =
-    elements.projectDescriptionInput
-      .value
+  name =
+    name
       .trim();
 
 
@@ -3288,69 +1948,74 @@ function handleCreateProject(
   }
 
 
-  saveCurrentEditor();
+  if (
+    projectState.files.some(
+      file =>
+        file.name
+          .toLowerCase() ===
+        name.toLowerCase()
+    )
+  ) {
+
+    toast(
+      "A file with that name already exists.",
+      "error"
+    );
+
+    return;
+
+  }
 
 
-  /*
-    For now the dashboard supports
-    multiple local projects.
-  */
+  const file = {
 
-  const projects =
-    loadProjects();
+    id:
+      createId(),
+
+    name,
+
+    language:
+      detectLanguage(
+        name
+      ),
+
+    parent:
+      null,
+
+    content:
+      starterCode(
+        name
+      )
+
+  };
 
 
-  const project =
-    createDefaultProject();
-
-
-  project.name =
-    name;
-
-  project.description =
-    description;
-
-
-  projects.push(
-    project
+  projectState.files.push(
+    file
   );
 
 
-  saveProjects(
-    projects
+  saveProject();
+
+
+  closeModal(
+    el.fileModal
   );
 
 
-  projectState =
-    project;
+  if (
+    el.fileForm
+  ) {
+    el.fileForm.reset();
+  }
 
-
-  currentFileId =
-    project.files[0]?.id ||
-    null;
-
-
-  closeProjectModal();
-
-  closeDashboardModal();
-
-
-  /*
-    Reinitialize CodeMirror with
-    the new project's first file.
-  */
 
   openFile(
-    currentFileId
+    file.id
   );
 
 
-  renderEverything();
-
-  updatePreview();
-
-
-  showToast(
+  toast(
     `${name} created.`,
     "success"
   );
@@ -3359,105 +2024,576 @@ function handleCreateProject(
 
 
 /* =========================================================
-   PROJECT LIST
+   STARTER CODE
    ========================================================= */
 
-function loadProjects() {
+function starterCode(
+  name
+) {
 
-  try {
-
-    const raw =
-      localStorage.getItem(
-        "webcode-studio-projects-v2"
-      );
-
-
-    if (!raw) {
-
-      return [
-        projectState
-      ];
-
-    }
-
-
-    const projects =
-      JSON.parse(raw);
-
-
-    if (
-      !Array.isArray(
-        projects
-      )
-    ) {
-
-      return [
-        projectState
-      ];
-
-    }
-
-
-    /*
-      Make sure current project
-      is included.
-    */
-
-    const exists =
-      projects.some(
-        project =>
-          project.id ===
-          projectState.id
-      );
-
-
-    if (!exists) {
-      projects.push(
-        projectState
-      );
-    }
-
-
-    return projects;
-
-  } catch (error) {
-
-    console.warn(
-      "Could not load projects.",
-      error
+  const language =
+    detectLanguage(
+      name
     );
 
 
-    return [
-      projectState
-    ];
+  if (
+    language === "html"
+  ) {
+
+    return `<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>${name}</title>
+</head>
+<body>
+
+</body>
+</html>`;
 
   }
+
+
+  if (
+    language === "css"
+  ) {
+
+    return `/* ${name} */
+
+`;
+
+  }
+
+
+  if (
+    language === "javascript"
+  ) {
+
+    return `// ${name}
+
+`;
+
+  }
+
+
+  return "";
 
 }
 
 
-function saveProjects(
-  projects
+/* =========================================================
+   CREATE FOLDER
+   ========================================================= */
+
+function createFolder(
+  name
 ) {
 
-  try {
+  name =
+    name.trim();
 
-    localStorage.setItem(
-      "webcode-studio-projects-v2",
-      JSON.stringify(
-        projects
-      )
+
+  if (!name) {
+    return;
+  }
+
+
+  if (
+    projectState.folders.some(
+      folder =>
+        folder.name
+          .toLowerCase() ===
+        name.toLowerCase()
+    )
+  ) {
+
+    toast(
+      "That folder already exists.",
+      "error"
     );
 
-  } catch (error) {
+    return;
 
-    console.warn(
-      "Could not save projects.",
-      error
+  }
+
+
+  projectState.folders.push({
+
+    id:
+      createId(),
+
+    name,
+
+    parent:
+      null
+
+  });
+
+
+  saveProject();
+
+  renderFileTree();
+
+
+  closeModal(
+    el.folderModal
+  );
+
+
+  el.folderForm?.reset();
+
+
+  toast(
+    `${name} folder created.`,
+    "success"
+  );
+
+}
+
+
+/* =========================================================
+   CUSTOM DELETE MODAL
+   ========================================================= */
+
+function askDelete(
+  type,
+  id,
+  name
+) {
+
+  deleteTarget = {
+
+    type,
+    id,
+    name
+
+  };
+
+
+  let modal =
+    document.getElementById(
+      "deleteModal"
+    );
+
+
+  if (!modal) {
+
+    modal =
+      document.createElement(
+        "div"
+      );
+
+
+    modal.id =
+      "deleteModal";
+
+
+    modal.className =
+`
+fixed
+inset-0
+z-[9999]
+hidden
+items-center
+justify-center
+bg-black/70
+backdrop-blur-sm
+p-5
+`;
+
+
+    modal.innerHTML =
+`
+<div
+  class="
+    w-full
+    max-w-sm
+    rounded-2xl
+    border
+    border-white/10
+    bg-[#11101d]
+    p-5
+    shadow-2xl
+  "
+>
+
+  <div class="flex items-start gap-3">
+
+    <div
+      class="
+        w-10
+        h-10
+        rounded-xl
+        bg-red-500/10
+        text-red-400
+        flex
+        items-center
+        justify-center
+        shrink-0
+      "
+    >
+
+      <svg
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="1.8"
+        width="20"
+        height="20"
+      >
+        <path d="M3 6h18"/>
+        <path d="M8 6V4h8v2"/>
+        <path d="M19 6l-1 14H6L5 6"/>
+      </svg>
+
+    </div>
+
+    <div>
+
+      <h3
+        class="text-white font-semibold"
+      >
+        Delete item?
+      </h3>
+
+      <p
+        id="deleteMessage"
+        class="
+          mt-1
+          text-sm
+          text-gray-400
+        "
+      ></p>
+
+    </div>
+
+  </div>
+
+  <div
+    class="
+      mt-5
+      flex
+      gap-2
+      justify-end
+    "
+  >
+
+    <button
+      id="deleteCancel"
+      type="button"
+      class="
+        h-10
+        px-4
+        rounded-xl
+        bg-white/5
+        text-gray-300
+        hover:bg-white/10
+      "
+    >
+      Cancel
+    </button>
+
+    <button
+      id="deleteConfirm"
+      type="button"
+      class="
+        h-10
+        px-4
+        rounded-xl
+        bg-red-500
+        text-white
+        hover:bg-red-600
+      "
+    >
+      Delete
+    </button>
+
+  </div>
+
+</div>
+`;
+
+
+    document.body.appendChild(
+      modal
+    );
+
+
+    $("deleteCancel")
+      .addEventListener(
+        "click",
+        closeDeleteModal
+      );
+
+
+    $("deleteConfirm")
+      .addEventListener(
+        "click",
+        confirmDelete
+      );
+
+  }
+
+
+  $("deleteMessage").textContent =
+    `"${name}" will be permanently removed from this project.`;
+
+
+  modal.classList.remove(
+    "hidden"
+  );
+
+  modal.classList.add(
+    "flex"
+  );
+
+}
+
+
+function closeDeleteModal() {
+
+  const modal =
+    $("deleteModal");
+
+
+  if (!modal) {
+    return;
+  }
+
+
+  modal.classList.add(
+    "hidden"
+  );
+
+  modal.classList.remove(
+    "flex"
+  );
+
+
+  deleteTarget =
+    null;
+
+}
+
+
+function confirmDelete() {
+
+  if (!deleteTarget) {
+    return;
+  }
+
+
+  const {
+    type,
+    id
+  } =
+    deleteTarget;
+
+
+  if (
+    type === "file"
+  ) {
+
+    const file =
+      projectState.files.find(
+        item =>
+          item.id === id
+      );
+
+
+    projectState.files =
+      projectState.files.filter(
+        item =>
+          item.id !== id
+      );
+
+
+    if (
+      currentFileId === id
+    ) {
+
+      const next =
+        projectState.files[0];
+
+
+      currentFileId =
+        next?.id ||
+        null;
+
+
+      if (next) {
+
+        openFile(
+          next.id
+        );
+
+      }
+
+    }
+
+
+    toast(
+      `${file?.name || "File"} deleted.`,
+      "success"
     );
 
   }
+
+
+  if (
+    type === "folder"
+  ) {
+
+    const childIds =
+      getFolderTreeIds(
+        id
+      );
+
+
+    const ids = [
+      id,
+      ...childIds
+    ];
+
+
+    projectState.folders =
+      projectState.folders.filter(
+        folder =>
+          !ids.includes(
+            folder.id
+          )
+      );
+
+
+    projectState.files =
+      projectState.files.filter(
+        file =>
+          !ids.includes(
+            file.parent
+          )
+      );
+
+
+    if (
+      !projectState.files.some(
+        file =>
+          file.id ===
+          currentFileId
+      )
+    ) {
+
+      const next =
+        projectState.files[0];
+
+
+      currentFileId =
+        next?.id ||
+        null;
+
+
+      if (next) {
+
+        openFile(
+          next.id
+        );
+
+      }
+
+    }
+
+
+    toast(
+      "Folder deleted.",
+      "success"
+    );
+
+  }
+
+
+  saveProject();
+
+  renderFileTree();
+
+  renderTabs();
+
+  closeDeleteModal();
+
+}
+
+
+/* =========================================================
+   FOLDER TREE IDS
+   ========================================================= */
+
+function getFolderTreeIds(
+  parentId
+) {
+
+  const result = [];
+
+
+  projectState.folders
+    .filter(
+      folder =>
+        folder.parent ===
+        parentId
+    )
+    .forEach(
+      folder => {
+
+        result.push(
+          folder.id
+        );
+
+        result.push(
+          ...getFolderTreeIds(
+            folder.id
+          )
+        );
+
+      }
+    );
+
+
+  return result;
+
+}
+
+
+/* =========================================================
+   MODALS
+   ========================================================= */
+
+function openModal(
+  modal
+) {
+
+  if (!modal) {
+    return;
+  }
+
+
+  modal.classList.remove(
+    "hidden"
+  );
+
+}
+
+
+function closeModal(
+  modal
+) {
+
+  if (!modal) {
+    return;
+  }
+
+
+  modal.classList.add(
+    "hidden"
+  );
 
 }
 
@@ -3466,63 +2602,68 @@ function saveProjects(
    DASHBOARD
    ========================================================= */
 
-function openDashboardModal() {
+function openDashboard() {
 
-  saveCurrentEditor();
+  renderDashboard();
 
-  saveProjectLocal();
-
-
-  elements.dashboardModal.classList.remove(
-    "hidden"
-  );
-
-
-  renderProjectDashboard();
-
-}
-
-
-function closeDashboardModal() {
-
-  elements.dashboardModal.classList.add(
-    "hidden"
+  openModal(
+    el.dashboardModal
   );
 
 }
 
 
-/* =========================================================
-   RENDER DASHBOARD
-   ========================================================= */
+function renderDashboard() {
 
-function renderProjectDashboard() {
-
-  const projects =
-    loadProjects();
-
-
-  elements.projectList.innerHTML =
-    "";
-
-
-  if (!projects.length) {
-
-    elements.projectList.innerHTML =
-      `
-      <div class="
-        py-12
-        text-center
-        text-gray-500
-        text-sm
-      ">
-        No projects yet.
-      </div>
-      `;
-
+  if (
+    !el.projectList
+  ) {
     return;
+  }
+
+
+  let projects = [];
+
+
+  try {
+
+    const raw =
+      localStorage.getItem(
+        PROJECTS_KEY
+      );
+
+
+    if (raw) {
+      projects =
+        JSON.parse(raw);
+    }
+
+  } catch {
+
+    projects = [];
 
   }
+
+
+  const currentExists =
+    projects.some(
+      project =>
+        project.id ===
+        projectState.id
+    );
+
+
+  if (!currentExists) {
+
+    projects.push(
+      projectState
+    );
+
+  }
+
+
+  el.projectList.innerHTML =
+    "";
 
 
   projects.forEach(
@@ -3535,138 +2676,95 @@ function renderProjectDashboard() {
 
 
       card.className =
-        "project-card mb-3";
+`
+p-4
+rounded-2xl
+border
+border-white/10
+bg-white/[.03]
+mb-3
+`;
 
 
-      const top =
-        document.createElement(
-          "div"
+      card.innerHTML =
+`
+<div class="flex items-center justify-between gap-3">
+
+  <div class="min-w-0">
+
+    <div
+      class="font-medium text-white truncate"
+    >
+      ${escapeHtml(project.name)}
+    </div>
+
+    <div
+      class="text-xs text-gray-500 mt-1"
+    >
+      ${project.files?.length || 0}
+      files
+    </div>
+
+  </div>
+
+  <button
+    type="button"
+    class="
+      project-open
+      px-3
+      h-9
+      rounded-xl
+      bg-white/5
+      hover:bg-white/10
+      text-xs
+    "
+  >
+    ${
+      project.id ===
+      projectState.id
+        ? "Current"
+        : "Open"
+    }
+  </button>
+
+</div>
+`;
+
+
+      const button =
+        card.querySelector(
+          ".project-open"
         );
 
 
-      top.className =
-        "flex items-start justify-between gap-3";
-
-
-      const information =
-        document.createElement(
-          "div"
-        );
-
-
-      information.className =
-        "min-w-0 flex-1";
-
-
-      const title =
-        document.createElement(
-          "div"
-        );
-
-
-      title.className =
-        "font-medium text-sm truncate";
-
-
-      title.textContent =
-        project.name;
-
-
-      const description =
-        document.createElement(
-          "div"
-        );
-
-
-      description.className =
-        "text-xs text-gray-500 mt-1 line-clamp-2";
-
-
-      description.textContent =
-        project.description ||
-        "No description";
-
-
-      const stats =
-        document.createElement(
-          "div"
-        );
-
-
-      stats.className =
-        "text-[10px] text-gray-600 mt-3";
-
-
-      stats.textContent =
-        `${project.files?.length || 0} files`;
-
-
-      information.appendChild(
-        title
-      );
-
-      information.appendChild(
-        description
-      );
-
-      information.appendChild(
-        stats
-      );
-
-
-      const open =
-        document.createElement(
-          "button"
-        );
-
-
-      open.type =
-        "button";
-
-
-      open.className =
-        "px-3 h-8 rounded-lg bg-white/5 hover:bg-white/10 text-xs text-gray-300";
-
-
-      open.textContent =
+      if (
         project.id ===
         projectState.id
-          ? "Current"
-          : "Open";
+      ) {
+
+        button.disabled =
+          true;
+
+        button.style.opacity =
+          ".5";
+
+      } else {
+
+        button.addEventListener(
+          "click",
+          () => {
+
+            switchProject(
+              project.id
+            );
+
+          }
+        );
+
+      }
 
 
-      open.disabled =
-        project.id ===
-        projectState.id;
-
-
-      open.addEventListener(
-        "click",
-        () => {
-
-          switchProject(
-            project.id
-          );
-
-        }
-      );
-
-
-      top.appendChild(
-        information
-      );
-
-      top.appendChild(
-        open
-      );
-
-
-      card.appendChild(
-        top
-      );
-
-
-      elements.projectList.appendChild(
+      el.projectList.appendChild(
         card
       );
 
@@ -3680,22 +2778,32 @@ function renderProjectDashboard() {
    ========================================================= */
 
 function switchProject(
-  projectId
+  id
 ) {
 
-  saveCurrentEditor();
-
-  saveProjectLocal();
+  let projects = [];
 
 
-  const projects =
-    loadProjects();
+  try {
+
+    projects =
+      JSON.parse(
+        localStorage.getItem(
+          PROJECTS_KEY
+        ) || "[]"
+      );
+
+  } catch {
+
+    projects = [];
+
+  }
 
 
   const project =
     projects.find(
       item =>
-        item.id === projectId
+        item.id === id
     );
 
 
@@ -3704,38 +2812,110 @@ function switchProject(
   }
 
 
+  saveProject();
+
+
   projectState =
     project;
 
 
-  ensureProjectIntegrity();
-
-
   currentFileId =
-    projectState.activeFileId ||
-    projectState.files[0]?.id ||
+    project.activeFileId ||
+    project.files[0]?.id ||
     null;
 
 
-  closeDashboardModal();
+  closeModal(
+    el.dashboardModal
+  );
 
 
-  if (currentFileId) {
+  openFile(
+    currentFileId
+  );
 
-    openFile(
-      currentFileId
-    );
+
+  renderAll();
+
+}
+
+
+/* =========================================================
+   CREATE PROJECT
+   ========================================================= */
+
+function createProject(
+  name,
+  description
+) {
+
+  const project =
+    createDefaultProject();
+
+
+  project.name =
+    name;
+
+
+  project.description =
+    description;
+
+
+  let projects = [];
+
+
+  try {
+
+    projects =
+      JSON.parse(
+        localStorage.getItem(
+          PROJECTS_KEY
+        ) || "[]"
+      );
+
+  } catch {
+
+    projects = [];
 
   }
 
 
-  renderEverything();
+  projects.push(
+    project
+  );
 
-  updatePreview();
+
+  localStorage.setItem(
+    PROJECTS_KEY,
+    JSON.stringify(
+      projects
+    )
+  );
 
 
-  showToast(
-    `Opened ${project.name}.`,
+  projectState =
+    project;
+
+
+  currentFileId =
+    project.files[0].id;
+
+
+  closeModal(
+    el.projectModal
+  );
+
+
+  openFile(
+    currentFileId
+  );
+
+
+  renderAll();
+
+
+  toast(
+    `${name} created.`,
     "success"
   );
 
@@ -3743,117 +2923,84 @@ function switchProject(
 
 
 /* =========================================================
-   AUTH MODAL
+   AUTH
    ========================================================= */
 
-function openAuthModal(
-  mode = "signin"
+function openAuth(
+  mode
 ) {
 
   authMode =
     mode;
 
 
-  updateAuthModal();
+  updateAuthUI();
 
-
-  elements.authModal.classList.remove(
-    "hidden"
-  );
-
-
-  setTimeout(
-    () => {
-      elements.authEmail?.focus();
-    },
-    50
+  openModal(
+    el.authModal
   );
 
 }
 
 
-function closeAuthModal() {
+function updateAuthUI() {
 
-  elements.authModal.classList.add(
-    "hidden"
-  );
-
-
-  elements.authError.classList.add(
-    "hidden"
-  );
-
-
-  elements.authError.textContent =
-    "";
-
-
-  elements.authForm?.reset();
-
-}
-
-
-/* =========================================================
-   AUTH MODE
-   ========================================================= */
-
-function toggleAuthMode() {
-
-  authMode =
+  const signIn =
     authMode ===
-    "signin"
-      ? "signup"
-      : "signin";
+    "signin";
 
 
-  updateAuthModal();
+  if (
+    el.authTitle
+  ) {
+
+    el.authTitle.textContent =
+      signIn
+        ? "Sign in"
+        : "Create account";
+
+  }
+
+
+  if (
+    el.authSubtitle
+  ) {
+
+    el.authSubtitle.textContent =
+      signIn
+        ? "Sign in to sync your projects."
+        : "Create your WebCode Studio account.";
+
+  }
+
+
+  if (
+    el.authSubmitBtn
+  ) {
+
+    el.authSubmitBtn.textContent =
+      signIn
+        ? "Sign in"
+        : "Create account";
+
+  }
+
+
+  if (
+    el.authSwitchBtn
+  ) {
+
+    el.authSwitchBtn.textContent =
+      signIn
+        ? "Create an account"
+        : "Already have an account? Sign in";
+
+  }
 
 }
 
 
-function updateAuthModal() {
-
-  const isSignIn =
-    authMode === "signin";
-
-
-  elements.authTitle.textContent =
-    isSignIn
-      ? "Sign in"
-      : "Create your account";
-
-
-  elements.authSubtitle.textContent =
-    isSignIn
-      ? "Sign in to sync your projects."
-      : "Create an account to access your projects.";
-
-
-  elements.authSubmitBtn.textContent =
-    isSignIn
-      ? "Sign in"
-      : "Create account";
-
-
-  elements.authSwitchBtn.textContent =
-    isSignIn
-      ? "Create an account"
-      : "Already have an account? Sign in";
-
-
-  elements.authPassword.autocomplete =
-    isSignIn
-      ? "current-password"
-      : "new-password";
-
-}
-
-
-/* =========================================================
-   AUTH SUBMIT
-   ========================================================= */
-
-async function handleAuthSubmit(
+async function submitAuth(
   event
 ) {
 
@@ -3861,35 +3008,39 @@ async function handleAuthSubmit(
 
 
   const email =
-    elements.authEmail.value.trim();
+    el.authEmail
+      ?.value
+      .trim();
 
 
   const password =
-    elements.authPassword.value;
+    el.authPassword
+      ?.value;
 
 
-  if (!email || !password) {
+  if (
+    !email ||
+    !password
+  ) {
+
+    showAuthError(
+      "Enter your email and password."
+    );
+
     return;
+
   }
 
 
-  setAuthError("");
-
-
-  elements.authSubmitBtn.disabled =
+  el.authSubmitBtn.disabled =
     true;
-
-
-  elements.authSubmitBtn.textContent =
-    authMode === "signin"
-      ? "Signing in..."
-      : "Creating account...";
 
 
   try {
 
     if (
-      authMode === "signin"
+      authMode ===
+      "signin"
     ) {
 
       await signInWithEmailAndPassword(
@@ -3898,8 +3049,8 @@ async function handleAuthSubmit(
         password
       );
 
-      showToast(
-        "Welcome back.",
+      toast(
+        "Signed in successfully.",
         "success"
       );
 
@@ -3911,211 +3062,95 @@ async function handleAuthSubmit(
         password
       );
 
-      showToast(
-        "Account created.",
+      toast(
+        "Account created successfully.",
         "success"
       );
 
     }
 
 
-    closeAuthModal();
+    closeModal(
+      el.authModal
+    );
 
-  } catch (error) {
+  } catch (
+    error
+  ) {
 
     console.error(
-      "Firebase authentication error:",
       error
     );
 
 
-    setAuthError(
-      getFirebaseErrorMessage(
+    showAuthError(
+      firebaseError(
         error
       )
     );
 
   } finally {
 
-    elements.authSubmitBtn.disabled =
+    el.authSubmitBtn.disabled =
       false;
 
-
-    elements.authSubmitBtn.textContent =
-      authMode === "signin"
-        ? "Sign in"
-        : "Create account";
+    updateAuthUI();
 
   }
 
 }
 
 
-/* =========================================================
-   FIREBASE AUTH STATE
-   ========================================================= */
+function showAuthError(
+  message
+) {
 
-function setupFirebaseAuth() {
-
-  onAuthStateChanged(
-    auth,
-    user => {
-
-      currentUser =
-        user;
-
-
-      updateAccountUI();
-
-      renderProjectNames();
-
-    }
-  );
-
-}
-
-
-/* =========================================================
-   ACCOUNT UI
-   ========================================================= */
-
-function updateAccountUI() {
-
-  if (!currentUser) {
-
-    elements.accountInitial.textContent =
-      "G";
-
-
-    elements.accountEmail.textContent =
-      "Guest";
-
-
-    elements.accountStatus.textContent =
-      "Not signed in";
-
-
-    elements.accountSignInBtn.classList.remove(
-      "hidden"
-    );
-
-
-    elements.accountSignOutBtn.classList.add(
-      "hidden"
-    );
-
-
+  if (
+    !el.authError
+  ) {
     return;
-
   }
 
 
-  const email =
-    currentUser.email ||
-    "User";
+  el.authError.textContent =
+    message;
 
 
-  elements.accountInitial.textContent =
-    email
-      .charAt(0)
-      .toUpperCase();
-
-
-  elements.accountEmail.textContent =
-    email;
-
-
-  elements.accountStatus.textContent =
-    "Firebase account connected";
-
-
-  elements.accountSignInBtn.classList.add(
-    "hidden"
-  );
-
-
-  elements.accountSignOutBtn.classList.remove(
+  el.authError.classList.remove(
     "hidden"
   );
 
 }
 
 
-/* =========================================================
-   SIGN OUT
-   ========================================================= */
-
-async function handleSignOut() {
-
-  try {
-
-    await signOut(
-      auth
-    );
-
-
-    closeAccountMenu();
-
-
-    showToast(
-      "Signed out.",
-      "success"
-    );
-
-  } catch (error) {
-
-    console.error(
-      error
-    );
-
-
-    showToast(
-      "Could not sign out.",
-      "error"
-    );
-
-  }
-
-}
-
-
-/* =========================================================
-   FIREBASE ERROR MESSAGE
-   ========================================================= */
-
-function getFirebaseErrorMessage(
+function firebaseError(
   error
 ) {
 
-  const code =
-    error?.code || "";
-
-
-  switch (code) {
+  switch (
+    error?.code
+  ) {
 
     case "auth/invalid-email":
       return "Enter a valid email address.";
 
     case "auth/user-not-found":
-      return "No account was found with that email.";
+      return "No account exists with this email.";
 
     case "auth/wrong-password":
-      return "The password is incorrect.";
+      return "Incorrect password.";
 
     case "auth/invalid-credential":
-      return "The email or password is incorrect.";
+      return "Incorrect email or password.";
 
     case "auth/email-already-in-use":
       return "An account already exists with this email.";
 
     case "auth/weak-password":
-      return "Use a stronger password.";
+      return "Your password is too weak.";
 
     case "auth/too-many-requests":
-      return "Too many attempts. Please try again later.";
-
-    case "auth/network-request-failed":
-      return "Network error. Check your internet connection.";
+      return "Too many attempts. Try again later.";
 
     default:
       return (
@@ -4129,95 +3164,38 @@ function getFirebaseErrorMessage(
 
 
 /* =========================================================
-   AUTH ERROR
+   ACCOUNT
    ========================================================= */
 
-function setAuthError(
-  message
-) {
+function updateAccount() {
 
-  if (!message) {
-
-    elements.authError.classList.add(
-      "hidden"
-    );
-
-    elements.authError.textContent =
-      "";
-
+  if (!el.accountEmail) {
     return;
-
   }
 
-
-  elements.authError.textContent =
-    message;
-
-
-  elements.authError.classList.remove(
-    "hidden"
-  );
-
-}
-
-
-/* =========================================================
-   ACCOUNT MENU
-   ========================================================= */
-
-function toggleAccountMenu() {
-
-  elements.accountMenu.classList.toggle(
-    "hidden"
-  );
-
-}
-
-
-function closeAccountMenu() {
-
-  elements.accountMenu?.classList.add(
-    "hidden"
-  );
-
-}
-
-
-/* =========================================================
-   PUBLISH PLACEHOLDER
-   ========================================================= */
-
-function handlePublish() {
-
-  /*
-    Publishing is deliberately not pretending
-    to work yet.
-
-    The next backend stage will connect this
-    button to:
-
-    Firebase Auth
-          ↓
-    Cloudflare Worker
-          ↓
-    D1
-          ↓
-    R2
-          ↓
-    Cloudflare publishing
-  */
 
   if (!currentUser) {
 
-    openAuthModal(
-      "signin"
-    );
+    el.accountEmail.textContent =
+      "Guest";
 
 
-    showToast(
-      "Sign in before publishing your website.",
-      "info"
-    );
+    el.accountStatus.textContent =
+      "Not signed in";
+
+
+    el.accountInitial.textContent =
+      "G";
+
+
+    el.accountSignInBtn
+      ?.classList
+      .remove("hidden");
+
+
+    el.accountSignOutBtn
+      ?.classList
+      .add("hidden");
 
 
     return;
@@ -4225,10 +3203,136 @@ function handlePublish() {
   }
 
 
-  showToast(
-    "Publishing will be connected to Cloudflare next.",
-    "info"
-  );
+  const email =
+    currentUser.email ||
+    "User";
+
+
+  el.accountEmail.textContent =
+    email;
+
+
+  el.accountStatus.textContent =
+    "Account connected";
+
+
+  el.accountInitial.textContent =
+    email
+      .charAt(0)
+      .toUpperCase();
+
+
+  el.accountSignInBtn
+    ?.classList
+    .add("hidden");
+
+
+  el.accountSignOutBtn
+    ?.classList
+    .remove("hidden");
+
+}
+
+
+/* =========================================================
+   RENDER ALL
+   ========================================================= */
+
+function renderAll() {
+
+  renderFileTree();
+
+  renderTabs();
+
+  renderCurrentFile();
+
+  updateProjectName();
+
+  updateAccount();
+
+}
+
+
+/* =========================================================
+   PROJECT NAME
+   ========================================================= */
+
+function updateProjectName() {
+
+  const name =
+    projectState.name;
+
+
+  if (
+    el.topProjectName
+  ) {
+
+    el.topProjectName.textContent =
+      name;
+
+  }
+
+
+  if (
+    el.sidebarProjectName
+  ) {
+
+    el.sidebarProjectName.textContent =
+      name;
+
+  }
+
+
+  if (
+    el.sidebarProjectStatus
+  ) {
+
+    el.sidebarProjectStatus.textContent =
+      currentUser
+        ? "Cloud account connected"
+        : "Local project";
+
+  }
+
+}
+
+
+/* =========================================================
+   SIDEBAR
+   ========================================================= */
+
+function openSidebar() {
+
+  el.sidebar
+    ?.classList
+    .add(
+      "mobile-open"
+    );
+
+
+  el.sidebarOverlay
+    ?.classList
+    .remove(
+      "hidden"
+    );
+
+}
+
+
+function closeSidebar() {
+
+  el.sidebar
+    ?.classList
+    .remove(
+      "mobile-open"
+    );
+
+
+  el.sidebarOverlay
+    ?.classList
+    .add(
+      "hidden"
+    );
 
 }
 
@@ -4237,109 +3341,51 @@ function handlePublish() {
    TOAST
    ========================================================= */
 
-function showToast(
+function toast(
   message,
   type = "info"
 ) {
 
-  if (!elements.toastContainer) {
+  if (
+    !el.toastContainer
+  ) {
+
+    console.log(
+      message
+    );
+
     return;
+
   }
 
 
-  const toast =
+  const item =
     document.createElement(
       "div"
     );
 
 
-  toast.className =
-    "toast";
-
-
-  const icon =
-    document.createElement(
-      "span"
-    );
-
-
-  icon.innerHTML =
-    getToastIcon(
-      type
-    );
-
-
-  const text =
-    document.createElement(
-      "span"
-    );
-
-
-  text.className =
-    "flex-1";
-
-
-  text.textContent =
-    message;
-
-
-  toast.appendChild(
-    icon
-  );
-
-  toast.appendChild(
-    text
-  );
-
-
-  elements.toastContainer.appendChild(
-    toast
-  );
-
-
-  setTimeout(
-    () => {
-
-      toast.classList.add(
-        "removing"
-      );
-
-
-      setTimeout(
-        () => {
-
-          toast.remove();
-
-        },
-        180
-      );
-
-    },
-    2600
-  );
-
-}
-
-
-function getToastIcon(
-  type
-) {
+  item.className =
+`
+px-4
+py-3
+rounded-xl
+border
+border-white/10
+bg-[#171525]
+text-sm
+text-white
+shadow-2xl
+mb-2
+`;
 
   if (
     type === "success"
   ) {
 
-    return `
-      <svg
-        viewBox="0 0 24 24"
-        fill="none"
-        stroke="currentColor"
-        stroke-width="1.8"
-        class="w-4 h-4 text-emerald-400"
-      >
-        <path d="m5 12 4 4L19 6"/>
-      </svg>
-    `;
+    item.classList.add(
+      "text-emerald-300"
+    );
 
   }
 
@@ -4348,60 +3394,536 @@ function getToastIcon(
     type === "error"
   ) {
 
-    return `
-      <svg
-        viewBox="0 0 24 24"
-        fill="none"
-        stroke="currentColor"
-        stroke-width="1.8"
-        class="w-4 h-4 text-red-400"
-      >
-        <circle cx="12" cy="12" r="9"/>
-        <path d="m9 9 6 6M15 9l-6 6"/>
-      </svg>
-    `;
+    item.classList.add(
+      "text-red-300"
+    );
 
   }
 
 
-  return `
-    <svg
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      stroke-width="1.8"
-      class="w-4 h-4 text-violet-400"
-    >
-      <circle cx="12" cy="12" r="9"/>
-      <path d="M12 10v6"/>
-      <path d="M12 7h.01"/>
-    </svg>
-  `;
+  item.textContent =
+    message;
+
+
+  el.toastContainer.appendChild(
+    item
+  );
+
+
+  setTimeout(
+    () => {
+
+      item.remove();
+
+    },
+    2500
+  );
 
 }
 
 
 /* =========================================================
-   MOBILE VIEWPORT RESIZE
+   ESCAPE HTML
    ========================================================= */
 
-/*
-  iOS Safari can change the visual viewport when
-  the keyboard opens.
-
-  We don't force a zoom or transform here.
-*/
-
-if (
-  window.visualViewport
+function escapeHtml(
+  value
 ) {
 
-  window.visualViewport.addEventListener(
-    "resize",
-    () => {
+  return String(value)
+    .replace(
+      /&/g,
+      "&amp;"
+    )
+    .replace(
+      /</g,
+      "&lt;"
+    )
+    .replace(
+      />/g,
+      "&gt;"
+    )
+    .replace(
+      /"/g,
+      "&quot;"
+    )
+    .replace(
+      /'/g,
+      "&#039;"
+    );
 
-      if (editorView) {
-        editorView.requestMeasure();
+}
+
+
+/* =========================================================
+   EVENT SETUP
+   ========================================================= */
+
+function setupEvents() {
+
+  /* Menu */
+
+  el.mobileMenuBtn
+    ?.addEventListener(
+      "click",
+      openSidebar
+    );
+
+
+  el.sidebarOverlay
+    ?.addEventListener(
+      "click",
+      closeSidebar
+    );
+
+
+  /* File buttons */
+
+  el.newFileBtn
+    ?.addEventListener(
+      "click",
+      () => {
+
+        openModal(
+          el.fileModal
+        );
+
+        setTimeout(
+          () => {
+            el.fileNameInput?.focus();
+          },
+          50
+        );
+
+      }
+    );
+
+
+  el.newFolderBtn
+    ?.addEventListener(
+      "click",
+      () => {
+
+        openModal(
+          el.folderModal
+        );
+
+        setTimeout(
+          () => {
+            el.folderNameInput?.focus();
+          },
+          50
+        );
+
+      }
+    );
+
+
+  /* Project */
+
+  el.newProjectBtn
+    ?.addEventListener(
+      "click",
+      () => {
+
+        openModal(
+          el.projectModal
+        );
+
+      }
+    );
+
+
+  el.dashboardNewProjectBtn
+    ?.addEventListener(
+      "click",
+      () => {
+
+        closeModal(
+          el.dashboardModal
+        );
+
+        openModal(
+          el.projectModal
+        );
+
+      }
+    );
+
+
+  /* Dashboard */
+
+  el.dashboardBtn
+    ?.addEventListener(
+      "click",
+      openDashboard
+    );
+
+
+  el.closeDashboardModal
+    ?.addEventListener(
+      "click",
+      () => {
+
+        closeModal(
+          el.dashboardModal
+        );
+
+      }
+    );
+
+
+  /* Forms */
+
+  el.fileForm
+    ?.addEventListener(
+      "submit",
+      event => {
+
+        event.preventDefault();
+
+        createFile(
+          el.fileNameInput.value
+        );
+
+      }
+    );
+
+
+  el.folderForm
+    ?.addEventListener(
+      "submit",
+      event => {
+
+        event.preventDefault();
+
+        createFolder(
+          el.folderNameInput.value
+        );
+
+      }
+    );
+
+
+  el.projectForm
+    ?.addEventListener(
+      "submit",
+      event => {
+
+        event.preventDefault();
+
+        createProject(
+          el.projectNameInput.value,
+          el.projectDescriptionInput.value
+        );
+
+      }
+    );
+
+
+  /* Close buttons */
+
+  el.closeFileModal
+    ?.addEventListener(
+      "click",
+      () =>
+        closeModal(
+          el.fileModal
+        )
+    );
+
+
+  el.cancelFileBtn
+    ?.addEventListener(
+      "click",
+      () =>
+        closeModal(
+          el.fileModal
+        )
+    );
+
+
+  el.closeFolderModal
+    ?.addEventListener(
+      "click",
+      () =>
+        closeModal(
+          el.folderModal
+        )
+    );
+
+
+  el.cancelFolderBtn
+    ?.addEventListener(
+      "click",
+      () =>
+        closeModal(
+          el.folderModal
+        )
+    );
+
+
+  el.closeProjectModal
+    ?.addEventListener(
+      "click",
+      () =>
+        closeModal(
+          el.projectModal
+        )
+    );
+
+
+  el.cancelProjectBtn
+    ?.addEventListener(
+      "click",
+      () =>
+        closeModal(
+          el.projectModal
+        )
+    );
+
+
+  /* Run */
+
+  el.runBtn
+    ?.addEventListener(
+      "click",
+      runProject
+    );
+
+
+  el.mobileRunBtn
+    ?.addEventListener(
+      "click",
+      runProject
+    );
+
+
+  /* Save */
+
+  el.saveBtn
+    ?.addEventListener(
+      "click",
+      () => {
+
+        saveEditorContent();
+
+        saveProject();
+
+        toast(
+          "Project saved.",
+          "success"
+        );
+
+      }
+    );
+
+
+  /* Preview */
+
+  el.refreshPreviewBtn
+    ?.addEventListener(
+      "click",
+      () => {
+
+        updatePreview();
+
+        toast(
+          "Preview refreshed.",
+          "success"
+        );
+
+      }
+    );
+
+
+  /* Editor / Preview */
+
+  el.mobileEditorBtn
+    ?.addEventListener(
+      "click",
+      showEditor
+    );
+
+
+  el.mobilePreviewBtn
+    ?.addEventListener(
+      "click",
+      showPreview
+    );
+
+
+  el.desktopEditorTab
+    ?.addEventListener(
+      "click",
+      showEditor
+    );
+
+
+  el.desktopPreviewTab
+    ?.addEventListener(
+      "click",
+      showPreview
+    );
+
+
+  /* Account */
+
+  el.accountBtn
+    ?.addEventListener(
+      "click",
+      event => {
+
+        event.stopPropagation();
+
+        el.accountMenu
+          ?.classList
+          .toggle(
+            "hidden"
+          );
+
+      }
+    );
+
+
+  el.accountSignInBtn
+    ?.addEventListener(
+      "click",
+      () => {
+
+        el.accountMenu
+          ?.classList
+          .add("hidden");
+
+        openAuth(
+          "signin"
+        );
+
+      }
+    );
+
+
+  el.accountSignOutBtn
+    ?.addEventListener(
+      "click",
+      async () => {
+
+        await signOut(
+          auth
+        );
+
+        el.accountMenu
+          ?.classList
+          .add("hidden");
+
+        toast(
+          "Signed out.",
+          "success"
+        );
+
+      }
+    );
+
+
+  /* Auth */
+
+  el.authForm
+    ?.addEventListener(
+      "submit",
+      submitAuth
+    );
+
+
+  el.authSwitchBtn
+    ?.addEventListener(
+      "click",
+      () => {
+
+        authMode =
+          authMode ===
+          "signin"
+            ? "signup"
+            : "signin";
+
+        updateAuthUI();
+
+      }
+    );
+
+
+  el.closeAuthModal
+    ?.addEventListener(
+      "click",
+      () =>
+        closeModal(
+          el.authModal
+        )
+    );
+
+
+  /* Publish */
+
+  el.publishBtn
+    ?.addEventListener(
+      "click",
+      () => {
+
+        if (!currentUser) {
+
+          openAuth(
+            "signin"
+          );
+
+          toast(
+            "Sign in before publishing.",
+            "info"
+          );
+
+          return;
+
+        }
+
+
+        toast(
+          "Publishing will be connected to Cloudflare next.",
+          "info"
+        );
+
+      }
+    );
+
+
+  /*
+    Close account menu
+    when clicking elsewhere.
+  */
+
+  document.addEventListener(
+    "click",
+    event => {
+
+      if (
+        !el.accountMenu
+      ) {
+        return;
+      }
+
+
+      if (
+        !el.accountBtn?.contains(
+          event.target
+        ) &&
+        !el.accountMenu.contains(
+          event.target
+        )
+      ) {
+
+        el.accountMenu
+          .classList
+          .add(
+            "hidden"
+          );
+
       }
 
     }
@@ -4411,37 +3933,82 @@ if (
 
 
 /* =========================================================
-   BEFORE PAGE CLOSE
+   FIREBASE AUTH STATE
+   ========================================================= */
+
+function setupAuth() {
+
+  onAuthStateChanged(
+    auth,
+    user => {
+
+      currentUser =
+        user;
+
+
+      updateAccount();
+
+      updateProjectName();
+
+    }
+  );
+
+}
+
+
+/* =========================================================
+   START APPLICATION
+   ========================================================= */
+
+function start() {
+
+  console.log(
+    "WebCode Studio starting..."
+  );
+
+
+  loadProject();
+
+  setupEvents();
+
+  createEditor();
+
+  renderAll();
+
+  updatePreview();
+
+  setupAuth();
+
+
+  /*
+    Start on the CODE view.
+    This is important for mobile.
+  */
+
+  showEditor();
+
+
+  console.log(
+    "WebCode Studio ready."
+  );
+
+}
+
+
+start();
+
+
+/* =========================================================
+   PAGE EXIT
    ========================================================= */
 
 window.addEventListener(
   "beforeunload",
   () => {
 
-    saveCurrentEditor();
+    saveEditorContent();
 
-    saveProjectLocal();
+    saveProject();
 
   }
-);
-
-
-/* =========================================================
-   INITIAL STATUS
-   ========================================================= */
-
-setTimeout(
-  () => {
-
-    if (
-      elements.saveStatus
-    ) {
-
-      elements.saveStatus.textContent =
-        "Saved locally";
-
-    }
-
-  },
-  500
 );
